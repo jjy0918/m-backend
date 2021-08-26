@@ -31,4 +31,14 @@ public class ManagerLogService {
 
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
+
+    public ResponseEntity<ResponseDto> searchManagerLog(int page, String word) {
+        Pageable pageRequest = PageDto.getPageRequest(page);
+        ManagerLogResponseDto managerLogResponseDto = new ManagerLogResponseDto(managerLogRepository.findAllByIdContains(word,pageRequest));
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("find managerLog by id")
+                .data(managerLogResponseDto)
+                .build();
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+    }
 }
