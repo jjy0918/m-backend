@@ -27,6 +27,10 @@ public class Manager {
 
     private String phoneNumber;
 
+    private String password;
+
+    private String belong;
+
     private boolean pmUpsSts;
     private boolean pmCooling;
     private boolean pmLighting;
