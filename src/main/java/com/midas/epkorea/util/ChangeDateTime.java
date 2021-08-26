@@ -11,7 +11,6 @@ public class ChangeDateTime {
     static String TimestampToString(Timestamp timestamp){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = formatter.format(timestamp);
-        System.out.println(format);
         return format;
     }
 

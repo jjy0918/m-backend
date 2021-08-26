@@ -33,7 +33,7 @@ public class PageDto {
       this.numberOfElements = page.getNumberOfElements();
       this.totalElements = page.getTotalElements();
 
-      if(this.pageNumber > this.totalPages) {
+      if(this.totalPages !=0 && this.pageNumber > this.totalPages) {
           throw new PageException();
       }
 
