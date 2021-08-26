@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Data
 public class PageDto {
@@ -39,6 +42,20 @@ public class PageDto {
 
 
   }
+    public static Pageable getPageRequest(int page){
+        Pageable pageRequest=null;
+        try{
+            // 페이지 번호, 시작, 정렬
+            pageRequest = PageRequest.of(page, 10, Sort.by("no").descending());
+
+        }catch (IllegalArgumentException illException){
+            // 요청하려는 페이지가 0이하인 작은 경우 예외 발생시킨다.
+            throw new PageException();
+        }
+        return pageRequest;
+    }
+
+
 
 
 }

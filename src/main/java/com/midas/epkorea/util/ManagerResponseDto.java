@@ -11,12 +11,12 @@ import java.util.List;
 @ToString
 public class ManagerResponseDto {
 
-    private PageDto page;
+    private PageDto pageInfo;
 
     private List<ManagerListDto> managerList;
 
     public ManagerResponseDto(Page page) {
-        this.page = new PageDto(page);
+        this.pageInfo = new PageDto(page);
         managerList = new ArrayList<>();
         page.getContent().forEach(manager ->{
             Manager m = (Manager) manager;
