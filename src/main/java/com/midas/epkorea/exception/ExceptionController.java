@@ -33,4 +33,12 @@ public class ExceptionController {
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler({UserNotPresentException.class})
+    public ResponseEntity<ResponseDto> userNotPresentException(){
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("존재하지 않는 계정입니다.")
+                .build();
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.BAD_REQUEST);
+    }
+
 }

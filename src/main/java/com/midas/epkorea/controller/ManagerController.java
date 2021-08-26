@@ -2,6 +2,7 @@ package com.midas.epkorea.controller;
 
 import com.midas.epkorea.domain.manager.Manager;
 import com.midas.epkorea.exception.RequiredValueException;
+import com.midas.epkorea.exception.UserNotPresentException;
 import com.midas.epkorea.exception.UserPresentException;
 import com.midas.epkorea.service.ManagerService;
 import com.midas.epkorea.util.ManagerRequestDto;
@@ -30,10 +31,19 @@ public class ManagerController {
         return managerService.searchManagers(page,type,word);
     }
 
+    // 관리자 생성
     @PostMapping
     public ResponseEntity<ResponseDto> createManager(@RequestBody ManagerRequestDto manager) throws UserPresentException, RequiredValueException {
         manager.checkRequiredValue();
         return managerService.createManager(manager);
+    }
+
+    // 관리자 수정
+    @PutMapping("/{no}")
+    public ResponseEntity<ResponseDto> editManager(@RequestBody ManagerRequestDto managerRequestDto, @PathVariable int no) throws RequiredValueException, UserNotPresentException {
+        managerRequestDto.checkRequiredValue();
+
+        return managerService.editManager(managerRequestDto,no);
     }
 
 
