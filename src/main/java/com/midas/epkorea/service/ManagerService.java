@@ -1,7 +1,10 @@
 package com.midas.epkorea.service;
 
+import com.midas.epkorea.domain.manager.Manager;
 import com.midas.epkorea.domain.manager.ManagerRepository;
 import com.midas.epkorea.exception.PageException;
+import com.midas.epkorea.exception.UserPresentException;
+import com.midas.epkorea.util.ManagerRequestDto;
 import com.midas.epkorea.util.ManagerResponseDto;
 import com.midas.epkorea.util.PageDto;
 import com.midas.epkorea.util.ResponseDto;
@@ -12,6 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +65,26 @@ public class ManagerService {
                 .data(managerResponseDto)
                 .build();
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+
+    }
+
+    public ResponseEntity<ResponseDto> createManager(ManagerRequestDto manager) throws UserPresentException {
+
+        Optional<Manager> managerOptional = managerRepository.findById(manager.getId());
+
+        if(managerOptional.isPresent()){
+            throw new UserPresentException();
+        }
+
+        Manager saveManager = Manager.builder().build();
+        saveManager.createManagerByManagerRequest(manager);
+        managerRepository.save(saveManager);
+
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("manager create")
+                .build();
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.CREATED );
+
 
     }
 }

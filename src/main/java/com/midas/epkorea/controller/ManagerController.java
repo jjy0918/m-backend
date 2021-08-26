@@ -1,6 +1,10 @@
 package com.midas.epkorea.controller;
 
+import com.midas.epkorea.domain.manager.Manager;
+import com.midas.epkorea.exception.RequiredValueException;
+import com.midas.epkorea.exception.UserPresentException;
 import com.midas.epkorea.service.ManagerService;
+import com.midas.epkorea.util.ManagerRequestDto;
 import com.midas.epkorea.util.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +28,12 @@ public class ManagerController {
     public ResponseEntity<ResponseDto> searchManagers(@RequestParam(defaultValue = "1") int page, @PathVariable String type, @RequestParam String word){
         page--;
         return managerService.searchManagers(page,type,word);
+    }
+
+    @PostMapping
+    public ResponseEntity<ResponseDto> createManager(@RequestBody ManagerRequestDto manager) throws UserPresentException, RequiredValueException {
+        manager.checkRequiredValue();
+        return managerService.createManager(manager);
     }
 
 

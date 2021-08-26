@@ -1,6 +1,8 @@
 package com.midas.epkorea.domain.manager;
 
+import com.midas.epkorea.util.ManagerRequestDto;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,22 +16,18 @@ import java.sql.Timestamp;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicInsert
 public class Manager {
 
     @Id
     private int no;
-
-    private String id;
-
-    private String name;
-
     private Timestamp registrationDate;
 
-    private String phoneNumber;
-
-    private String password;
-
+    private String id;
+    private String name;
     private String belong;
+    private String phoneNumber;
+    private String password;
 
     private boolean pmUpsSts;
     private boolean pmCooling;
@@ -41,4 +39,24 @@ public class Manager {
     private boolean cmLighting;
     private boolean cmRailroad;
 
+
+    public void createManagerByManagerRequest(ManagerRequestDto managerRequestDto){
+
+        this.id= managerRequestDto.getId();
+        this.name=managerRequestDto.getName();
+        this.belong= managerRequestDto.getBelong();
+        this.phoneNumber=managerRequestDto.getPhoneNumber();
+        this.password=managerRequestDto.getPassword();
+
+        this.pmUpsSts = managerRequestDto.isPmUpsSts();
+        this.pmCooling = managerRequestDto.isPmCooling();
+        this.pmLighting = managerRequestDto.isPmLighting();
+        this.pmRailroad = managerRequestDto.isPmRailroad();
+
+        this.cmUpsSts = managerRequestDto.isCmUpsSts();
+        this.cmCooling = managerRequestDto.isCmCooling();
+        this.cmLighting = managerRequestDto.isCmLighting();
+        this.cmRailroad = managerRequestDto.isCmRailroad();
+
+    }
 }

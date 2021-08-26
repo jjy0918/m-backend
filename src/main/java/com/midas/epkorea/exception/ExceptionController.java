@@ -17,11 +17,20 @@ public class ExceptionController {
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({MissingServletRequestParameterException.class})
+    @ExceptionHandler({MissingServletRequestParameterException.class,RequiredValueException.class})
     public ResponseEntity<ResponseDto> missingServletRequestParameterException(){
         ResponseDto responseDto = ResponseDto.builder()
                 .message("필수 인자가 입력되지 않았습니다.")
                 .build();
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler({UserPresentException.class})
+    public ResponseEntity<ResponseDto> userPresentException(){
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("이미 존재하는 계정입니다.")
+                .build();
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.BAD_REQUEST);
+    }
+
 }
