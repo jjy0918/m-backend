@@ -30,6 +30,12 @@ public class ProductManagementController {
 
     }
 
+    @GetMapping("/search/name")
+    public ResponseEntity<ResponseDto> searchProductManagement(@RequestParam(defaultValue = "1") int page, @RequestParam String word){
+        page--;
+        return productManagetmentService.searchProductManagement(page,word);
+    }
+
 
 
 

@@ -39,7 +39,7 @@ public class ProductManagetmentService {
         // 따로 개수 확인하는 것이 좋은가???
         ProductManagementResponseDto productManagementResponseDto = new ProductManagementResponseDto(productManagementRepository.findAll(pageRequest));
         ResponseDto responseDto = ResponseDto.builder()
-                .message("find all managers")
+                .message("find all productManagement")
                 .data(productManagementResponseDto)
                 .build();
 
@@ -55,6 +55,20 @@ public class ProductManagetmentService {
                 .build();
 
         return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+
+    }
+
+    public ResponseEntity<ResponseDto> searchProductManagement(int page, String word) {
+        Pageable pageRequest = PageDto.getPageRequest(page);
+
+        // 따로 개수 확인하는 것이 좋은가???
+        ProductManagementResponseDto productManagementResponseDto = new ProductManagementResponseDto(productManagementRepository.findAllByNameContains(pageRequest,word));
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("search productManagement by name")
+                .data(productManagementResponseDto)
+                .build();
+
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
 
     }
 }
