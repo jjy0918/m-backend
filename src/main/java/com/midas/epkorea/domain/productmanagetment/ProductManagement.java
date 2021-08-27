@@ -1,11 +1,13 @@
 package com.midas.epkorea.domain.productmanagetment;
 
 import com.midas.epkorea.domain.category.Category;
+import com.midas.epkorea.util.ProductManagementRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -17,9 +19,11 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
+@DynamicUpdate
 public class ProductManagement {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int no;
 
     private String name;
@@ -42,4 +46,19 @@ public class ProductManagement {
     @JoinColumn(name = "category",insertable=false, updatable=false)
     private Category categoryDetail;
 
+    public void createProductManagementByRequest(ProductManagementRequestDto requestDto) {
+
+        this.name = requestDto.getName();
+
+        this.category = requestDto.getCategory();
+
+        this.catalog = requestDto.getCatalog();
+
+        this.image = requestDto.getImage();
+
+        this.expose = requestDto.isExpose();
+
+        this.editor = requestDto.getEditor();
+
+    }
 }

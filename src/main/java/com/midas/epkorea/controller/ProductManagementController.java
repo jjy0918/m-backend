@@ -1,7 +1,9 @@
 package com.midas.epkorea.controller;
 
 import com.midas.epkorea.exception.ProductManagementNotPresentException;
+import com.midas.epkorea.exception.RequiredValueException;
 import com.midas.epkorea.service.ProductManagetmentService;
+import com.midas.epkorea.util.ProductManagementRequestDto;
 import com.midas.epkorea.util.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +36,12 @@ public class ProductManagementController {
     public ResponseEntity<ResponseDto> searchProductManagement(@RequestParam(defaultValue = "1") int page, @RequestParam String word){
         page--;
         return productManagetmentService.searchProductManagement(page,word);
+    }
+
+    @PostMapping
+    public ResponseEntity<ResponseDto> createProductManagement(@RequestBody ProductManagementRequestDto requestDto) throws RequiredValueException {
+        requestDto.check();
+        return productManagetmentService.createProductManagement(requestDto);
     }
 
 
