@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@ToString
 public class ManagerResponseDto {
 
     private PageDto pageInfo;
