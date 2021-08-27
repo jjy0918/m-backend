@@ -93,16 +93,51 @@ public class ManagerService {
     @Transactional
     public ResponseEntity<ResponseDto> editManager(ManagerRequestDto managerRequestDto, int no) throws UserNotPresentException {
 
-        Optional<Manager> managerOptional = managerRepository.findById(no);
+        Manager getManager = getManager(no);
 
-        Manager newManager = managerOptional.orElseThrow(()->new UserNotPresentException());
-
-        newManager.createManagerByManagerRequest(managerRequestDto);
+        getManager.createManagerByManagerRequest(managerRequestDto);
 
         ResponseDto responseDto = ResponseDto.builder()
                 .message("manager update")
                 .build();
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.CREATED );
 
+    }
+
+    public ResponseEntity<ResponseDto> getManagerByNo(int no) throws UserNotPresentException {
+
+        Manager getManager = getManager(no);
+
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("find manager by no")
+                .data(getManager)
+                .build();
+
+        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+
+    }
+
+    public ResponseEntity<ResponseDto> deleteManger(int no) throws UserNotPresentException {
+
+        Manager getManager = getManager(no);
+
+        managerRepository.delete(getManager);
+
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("delete manager")
+                .build();
+
+        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+
+
+    }
+
+    // 번호로 관리자 받아오기
+    private Manager getManager(int no) throws UserNotPresentException {
+        Optional<Manager> managerOptional = managerRepository.findById(no);
+
+        Manager getManager = managerOptional.orElseThrow(()->new UserNotPresentException());
+
+        return getManager;
     }
 }
