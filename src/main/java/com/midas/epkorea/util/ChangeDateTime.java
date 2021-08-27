@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class ChangeDateTime {
 
     static String TimestampToString(Timestamp timestamp){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String format = formatter.format(timestamp);
         return format;
     }
