@@ -1,6 +1,7 @@
 package com.midas.epkorea.exception;
 
 import com.midas.epkorea.util.ResponseDto;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -39,6 +40,15 @@ public class ExceptionController {
                 .message("존재하지 않는 계정입니다.")
                 .build();
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({ProductManagementNotPresentException.class})
+    public ResponseEntity<ResponseDto> ProductManagementNotPresentException(){
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("제품 관리 항목이 존재하지 않습니다.")
+                .build();
+
+        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.BAD_REQUEST);
     }
 
 }
