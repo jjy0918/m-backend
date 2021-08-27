@@ -1,6 +1,7 @@
 package com.midas.epkorea.domain.productmanagetment;
 
 import com.midas.epkorea.domain.category.Category;
+import com.midas.epkorea.domain.productmanagementtable.ProductManagementTable;
 import com.midas.epkorea.util.ProductManagementRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Table
 @Entity
@@ -45,6 +47,10 @@ public class ProductManagement {
     @OneToOne
     @JoinColumn(name = "category",insertable=false, updatable=false)
     private Category categoryDetail;
+
+    @OneToMany
+    @JoinColumn(name = "productManagementNo",insertable=false, updatable=false)
+    private List<ProductManagementTable> productManagementTableList;
 
     public void createProductManagementByRequest(ProductManagementRequestDto requestDto) {
 
