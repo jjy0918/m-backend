@@ -1,6 +1,6 @@
 package com.midas.epkorea.domain.productmanagementtable;
 
-import com.midas.epkorea.dto.ProductManagementTableListRequestDto;
+import com.midas.epkorea.dto.TableListRequestDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -28,7 +28,7 @@ public class ProductManagementTable {
 
     private String text;
 
-    public void createProductManagementTableByRequest(ProductManagementTableListRequestDto requestDto,int pmNo) {
+    public void createProductManagementTableByRequest(TableListRequestDto requestDto, int pmNo) {
 
         this.title=requestDto.getTitle();
         this.text = requestDto.getText();

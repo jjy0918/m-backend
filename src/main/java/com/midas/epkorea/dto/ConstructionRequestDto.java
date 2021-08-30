@@ -2,35 +2,36 @@ package com.midas.epkorea.dto;
 
 import com.midas.epkorea.exception.RequiredValueException;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
-@Data
-@AllArgsConstructor
+@Getter
+@ToString
 @NoArgsConstructor
-public class ProductManagementRequestDto {
-
-    private int category;
+@AllArgsConstructor
+public class ConstructionRequestDto {
 
     private String name;
 
-    private String image;
+    private int category;
 
-    private String catalog;
+    private String thumbnail;
+
+    private List<String> detailImage;
 
     private boolean expose;
 
     private List<TableListRequestDto> tableList;
 
-    private String editor;
+    private List<BannerRequestDto> banner;
 
     public void check() throws RequiredValueException {
         if(name==null || (category<1)){
             throw new RequiredValueException();
         }
     }
-
 
 }

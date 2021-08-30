@@ -1,13 +1,13 @@
 package com.midas.epkorea.controller;
 
+import com.midas.epkorea.dto.ConstructionRequestDto;
 import com.midas.epkorea.dto.ResponseDto;
+import com.midas.epkorea.exception.ProductManagementNotPresentException;
+import com.midas.epkorea.exception.RequiredValueException;
 import com.midas.epkorea.service.ConstructionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/construction")
@@ -28,6 +28,17 @@ public class ConstructionController {
     public ResponseEntity<ResponseDto> searchConstructionByName(@RequestParam(defaultValue = "1") int page, @RequestParam String word){
         page--;
         return constructionService.searchConstructionByName(page,word);
+    }
+
+    @GetMapping("/{no}")
+    public ResponseEntity<ResponseDto> searchConstructionDetailByNo(@PathVariable int no) throws ProductManagementNotPresentException {
+        return constructionService.searchConstructionDetailByNo(no);
+    }
+
+    @PostMapping
+    public ResponseEntity<ResponseDto> createConstruction(@RequestBody ConstructionRequestDto requestDto) throws RequiredValueException {
+        requestDto.check();
+        return constructionService.createConstruction(requestDto);
     }
 
 

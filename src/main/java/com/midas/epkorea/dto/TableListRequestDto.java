@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductManagementTableListRequestDto {
+public class TableListRequestDto {
 
     private String title;
     private String text;

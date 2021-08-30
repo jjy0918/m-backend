@@ -44,7 +44,7 @@ public class ExceptionController {
     @ExceptionHandler({ProductManagementNotPresentException.class})
     public ResponseEntity<ResponseDto> productManagementNotPresentException(){
         ResponseDto responseDto = ResponseDto.builder()
-                .message("제품 관리 항목이 존재하지 않습니다.")
+                .message("항목이 존재하지 않습니다.")
                 .build();
 
         return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
