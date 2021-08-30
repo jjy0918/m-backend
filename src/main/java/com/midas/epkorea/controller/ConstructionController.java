@@ -41,5 +41,12 @@ public class ConstructionController {
         return constructionService.createConstruction(requestDto);
     }
 
+    @DeleteMapping({"/{no}"})
+    public ResponseEntity<ResponseDto> deleteConstruction(@PathVariable int no) throws ProductManagementNotPresentException {
+        return constructionService.deleteConstruction(no);
+    }
+
+
+
 
 }

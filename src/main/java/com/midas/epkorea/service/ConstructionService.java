@@ -148,4 +148,19 @@ public class ConstructionService {
 
 
     }
+
+    public ResponseEntity<ResponseDto> deleteConstruction(int no) throws ProductManagementNotPresentException {
+        Optional<Construction> constructionOptional = constructionRepository.findById(no);
+
+        Construction construction= constructionOptional.orElseThrow(ProductManagementNotPresentException::new);
+
+        constructionRepository.delete(construction);
+
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("delete construction by no")
+                .build();
+
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+
+    }
 }
