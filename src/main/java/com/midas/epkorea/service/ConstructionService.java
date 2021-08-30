@@ -28,4 +28,19 @@ public class ConstructionService {
        return new ResponseEntity<>(responseDto, HttpStatus.OK);
 
     }
+
+    public ResponseEntity<ResponseDto> searchConstructionByName(int page, String word) {
+
+        Pageable pageRequest = PageDto.getPageRequest(page);
+
+        ConstructionResponseDto constructionResponseDto = new ConstructionResponseDto(constructionRepository.findAllByNameContains(pageRequest,word));
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("search construction by name")
+                .data(constructionResponseDto)
+                .build();
+
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+
+
+    }
 }

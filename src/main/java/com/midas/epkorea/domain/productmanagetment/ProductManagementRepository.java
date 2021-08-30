@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductManagementRepository extends JpaRepository<ProductManagement,Integer> {
 
-    Page findAllByNameContains(Pageable pageable,String name);
+    Page<ProductManagement> findAllByNameContains(Pageable pageable,String name);
 
 }

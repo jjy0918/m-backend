@@ -24,5 +24,11 @@ public class ConstructionController {
         return constructionService.getAllConstruction(page);
     }
 
+    @GetMapping("/search/name")
+    public ResponseEntity<ResponseDto> searchConstructionByName(@RequestParam(defaultValue = "1") int page, @RequestParam String word){
+        page--;
+        return constructionService.searchConstructionByName(page,word);
+    }
+
 
 }
