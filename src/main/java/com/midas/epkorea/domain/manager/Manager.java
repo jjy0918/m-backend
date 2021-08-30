@@ -1,6 +1,6 @@
 package com.midas.epkorea.domain.manager;
 
-import com.midas.epkorea.util.ManagerRequestDto;
+import com.midas.epkorea.dto.ManagerRequestDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

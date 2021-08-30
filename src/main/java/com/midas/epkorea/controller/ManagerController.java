@@ -1,14 +1,12 @@
 package com.midas.epkorea.controller;
 
-import com.midas.epkorea.domain.manager.Manager;
 import com.midas.epkorea.exception.RequiredValueException;
 import com.midas.epkorea.exception.UserNotPresentException;
 import com.midas.epkorea.exception.UserPresentException;
 import com.midas.epkorea.service.ManagerService;
-import com.midas.epkorea.util.ManagerRequestDto;
-import com.midas.epkorea.util.ResponseDto;
+import com.midas.epkorea.dto.ManagerRequestDto;
+import com.midas.epkorea.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.midas.epkorea.util;
+package com.midas.epkorea.dto;
 
 import com.midas.epkorea.exception.PageException;
 import lombok.AllArgsConstructor;

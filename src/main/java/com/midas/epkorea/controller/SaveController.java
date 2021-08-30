@@ -1,13 +1,12 @@
 package com.midas.epkorea.controller;
 
 import com.midas.epkorea.service.SaveService;
-import com.midas.epkorea.util.ResponseDto;
+import com.midas.epkorea.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @RestController

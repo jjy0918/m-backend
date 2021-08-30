@@ -1,6 +1,7 @@
-package com.midas.epkorea.util;
+package com.midas.epkorea.dto;
 
 import com.midas.epkorea.domain.manager.Manager;
+import com.midas.epkorea.util.ChangeDateTime;
 import lombok.*;
 import org.springframework.data.domain.Page;
 

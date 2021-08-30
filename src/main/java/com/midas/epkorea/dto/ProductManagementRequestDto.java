@@ -1,10 +1,9 @@
-package com.midas.epkorea.util;
+package com.midas.epkorea.dto;
 
 import com.midas.epkorea.exception.RequiredValueException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.List;
 

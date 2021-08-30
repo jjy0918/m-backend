@@ -1,14 +1,14 @@
 package com.midas.epkorea.service;
 
-import com.midas.epkorea.domain.manager.Manager;
 import com.midas.epkorea.domain.productmanagementtable.ProductManagementTable;
 import com.midas.epkorea.domain.productmanagementtable.ProductManagementTableRepository;
 import com.midas.epkorea.domain.productmanagetment.ProductManagement;
 import com.midas.epkorea.domain.productmanagetment.ProductManagementRepository;
+import com.midas.epkorea.dto.PageDto;
+import com.midas.epkorea.dto.ProductManagementRequestDto;
+import com.midas.epkorea.dto.ProductManagementResponseDto;
+import com.midas.epkorea.dto.ResponseDto;
 import com.midas.epkorea.exception.ProductManagementNotPresentException;
-import com.midas.epkorea.exception.UserNotPresentException;
-import com.midas.epkorea.exception.UserPresentException;
-import com.midas.epkorea.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -16,11 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service

@@ -1,9 +1,8 @@
-package com.midas.epkorea.util;
+package com.midas.epkorea.dto;
 
-import com.midas.epkorea.domain.manager.Manager;
 import com.midas.epkorea.domain.managerlog.ManagerLog;
+import com.midas.epkorea.util.ChangeDateTime;
 import lombok.Data;
-import lombok.ToString;
 import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;

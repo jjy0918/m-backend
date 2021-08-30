@@ -1,7 +1,6 @@
 package com.midas.epkorea.exception;
 
-import com.midas.epkorea.util.ResponseDto;
-import org.omg.CORBA.PUBLIC_MEMBER;
+import com.midas.epkorea.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;

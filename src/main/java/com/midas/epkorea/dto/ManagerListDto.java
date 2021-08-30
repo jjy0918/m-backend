@@ -1,4 +1,4 @@
-package com.midas.epkorea.util;
+package com.midas.epkorea.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,19 +9,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductManagementListDto {
+public class ManagerListDto {
 
     private int no;
 
-    private String category;
+    private String id;
 
     private String name;
 
-    private String catalog;
+    private String belong;
 
     private String registrationDate;
-
-    private boolean expose;
 
 
 }

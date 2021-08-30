@@ -2,7 +2,7 @@ package com.midas.epkorea.domain.productmanagetment;
 
 import com.midas.epkorea.domain.category.Category;
 import com.midas.epkorea.domain.productmanagementtable.ProductManagementTable;
-import com.midas.epkorea.util.ProductManagementRequestDto;
+import com.midas.epkorea.dto.ProductManagementRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
