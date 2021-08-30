@@ -1,5 +1,6 @@
 package com.midas.epkorea.controller;
 
+import com.midas.epkorea.exception.FileNameNotFoundException;
 import com.midas.epkorea.service.SaveService;
 import com.midas.epkorea.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class SaveController {
 
 
     @PostMapping
-    public ResponseEntity<ResponseDto> saveImage(@RequestParam MultipartFile file) throws IOException {
+    public ResponseEntity<ResponseDto> saveImage(@RequestParam MultipartFile file) throws IOException, FileNameNotFoundException {
 
         return saveService.registerImageIntoServer(file);
 

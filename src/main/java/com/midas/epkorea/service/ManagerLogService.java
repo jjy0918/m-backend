@@ -28,7 +28,7 @@ public class ManagerLogService {
                 .data(managerLogResponseDto)
                 .build();
 
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     public ResponseEntity<ResponseDto> searchManagerLog(int page, String word) {
@@ -38,6 +38,6 @@ public class ManagerLogService {
                 .message("find managerLog by id")
                 .data(managerLogResponseDto)
                 .build();
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 }

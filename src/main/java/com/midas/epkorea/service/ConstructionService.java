@@ -2,7 +2,6 @@ package com.midas.epkorea.service;
 
 import com.midas.epkorea.domain.construction.ConstructionRepository;
 import com.midas.epkorea.dto.ConstructionResponseDto;
-import com.midas.epkorea.dto.ManagerLogResponseDto;
 import com.midas.epkorea.dto.PageDto;
 import com.midas.epkorea.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;

@@ -23,9 +23,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductManagetmentService {
 
-    final private ProductManagementRepository productManagementRepository;
+    private final ProductManagementRepository productManagementRepository;
 
-    final private ProductManagementTableRepository productManagementTableRepository;
+    private final ProductManagementTableRepository productManagementTableRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -35,9 +35,8 @@ public class ProductManagetmentService {
     private ProductManagement getProductManagement(int no) throws ProductManagementNotPresentException {
         Optional<ProductManagement> productManagement = productManagementRepository.findById(no);
 
-        ProductManagement getProductManagement = productManagement.orElseThrow(()->new ProductManagementNotPresentException());
+        return productManagement.orElseThrow(ProductManagementNotPresentException::new);
 
-        return getProductManagement;
     }
 
     public ResponseEntity<ResponseDto> getProductManagementList(int page) {
@@ -50,7 +49,7 @@ public class ProductManagetmentService {
                 .data(productManagementResponseDto)
                 .build();
 
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     public ResponseEntity<ResponseDto> getProductManagementByNo(int no) throws ProductManagementNotPresentException {
@@ -61,7 +60,7 @@ public class ProductManagetmentService {
                 .data(getProductManagement)
                 .build();
 
-        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
 
     }
 
@@ -74,7 +73,7 @@ public class ProductManagetmentService {
                 .data(productManagementResponseDto)
                 .build();
 
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
 
     }
 
@@ -86,7 +85,7 @@ public class ProductManagetmentService {
         int no = productManagement.getNo();
 
         if(requestDto.getTableList()!=null){
-            final int cnt[]={0};
+            final int[] cnt={0};
             requestDto.getTableList().forEach(pmtr ->{
                 if(pmtr.checkTableListItem() && cnt[0] < 10){
                     ProductManagementTable productManagementTable = (ProductManagementTable.builder().build());
@@ -102,7 +101,7 @@ public class ProductManagetmentService {
         ResponseDto responseDto = ResponseDto.builder()
                 .message("ProductManagement create")
                 .build();
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.CREATED );
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED );
     }
 
 

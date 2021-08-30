@@ -15,21 +15,20 @@ public class ManagerResponseDto {
 
     private List<ManagerListDto> managerList;
 
-    public ManagerResponseDto(Page page) {
+    public ManagerResponseDto(Page<Manager> page) {
         this.pageInfo = new PageDto(page);
         managerList = new ArrayList<>();
-        page.getContent().forEach(manager ->{
-            Manager m = (Manager) manager;
+        page.getContent().forEach(manager ->
             managerList.add(
               ManagerListDto.builder()
-                      .id(m.getId())
-                      .belong(m.getBelong())
-                      .name(m.getName())
-                      .no(m.getNo())
-                      .registrationDate(ChangeDateTime.TimestampToString(m.getRegistrationDate()))
+                      .id(manager.getId())
+                      .belong(manager.getBelong())
+                      .name(manager.getName())
+                      .no(manager.getNo())
+                      .registrationDate(ChangeDateTime.timestampToString(manager.getRegistrationDate()))
                       .build()
-            );
-        } );
+            )
+         );
     }
 
 }

@@ -13,10 +13,7 @@ public class ProductManagementTableListRequestDto {
     private String text;
 
     public boolean checkTableListItem(){
-        if(title==null || text==null){
-            return false;
-        }
-        return true;
+        return title!=null && text!=null;
     }
 
 }

@@ -14,23 +14,20 @@ public class ProductManagementResponseDto {
 
     private List<ProductManagementListDto> productManagementListDtoList;
 
-    public ProductManagementResponseDto(Page page) {
+    public ProductManagementResponseDto(Page<ProductManagement> page) {
         this.pageInfo = new PageDto(page);
         productManagementListDtoList = new ArrayList<>();
-        page.getContent().forEach(pmdto ->{
-
-            ProductManagement pm = (ProductManagement) pmdto;
-
+        page.getContent().forEach(pmldl ->
             productManagementListDtoList.add(
                     ProductManagementListDto.builder()
-                            .no(pm.getNo())
-                            .catalog(pm.getCatalog())
-                            .category(pm.getCategoryDetail().getChild())
-                            .name(pm.getName())
-                            .registrationDate(ChangeDateTime.TimestampToString(pm.getRegistrationDate()))
-                            .expose(pm.isExpose())
+                            .no(pmldl.getNo())
+                            .catalog(pmldl.getCatalog())
+                            .category(pmldl.getCategoryDetail().getChild())
+                            .name(pmldl.getName())
+                            .registrationDate(ChangeDateTime.timestampToString(pmldl.getRegistrationDate()))
+                            .expose(pmldl.isExpose())
                             .build()
-            );
-        } );
+            )
+         );
     }
 }

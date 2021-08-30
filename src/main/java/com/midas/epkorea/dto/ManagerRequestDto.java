@@ -1,10 +1,10 @@
 package com.midas.epkorea.dto;
 
 import com.midas.epkorea.exception.RequiredValueException;
-import lombok.*;
-import org.joda.time.DateTime;
-
-import java.sql.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @ToString

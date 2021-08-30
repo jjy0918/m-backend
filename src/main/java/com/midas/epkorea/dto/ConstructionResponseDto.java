@@ -1,7 +1,6 @@
 package com.midas.epkorea.dto;
 
 import com.midas.epkorea.domain.construction.Construction;
-import com.midas.epkorea.domain.managerlog.ManagerLog;
 import com.midas.epkorea.util.ChangeDateTime;
 import lombok.Data;
 import org.springframework.data.domain.Page;
@@ -16,21 +15,20 @@ public class ConstructionResponseDto {
     private List<ConstructionDto> constructionDtoList;
 
 
-    public ConstructionResponseDto(Page page) {
+    public ConstructionResponseDto(Page<Construction> page) {
         this.pageInfo = new PageDto(page);
         this.constructionDtoList = new ArrayList<>();
-        page.getContent().forEach(construction ->{
-            Construction con = (Construction) construction;
+        page.getContent().forEach(construction ->
             constructionDtoList.add(
                     ConstructionDto.builder()
-                            .no(con.getNo())
-                            .category(con.getCategoryDetail().getChild())
-                            .registrationDate(ChangeDateTime.TimestampToString(con.getRegistrationDate()))
-                            .name(con.getName())
-                            .expose(con.isExpose())
+                            .no(construction.getNo())
+                            .category(construction.getCategoryDetail().getChild())
+                            .registrationDate(ChangeDateTime.timestampToString(construction.getRegistrationDate()))
+                            .name(construction.getName())
+                            .expose(construction.isExpose())
                             .build()
-            );
-        } );
+            )
+        );
     }
 
 }

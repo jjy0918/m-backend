@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.midas.epkorea.dto.ResponseDto;
+import com.midas.epkorea.exception.FileNameNotFoundException;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class SaveService {
     @Value("${cloud.aws.region.static}")
     private String region;
 
-
+    private Random rnd = new Random();
 
     @PostConstruct
     public void setS3Client() {
@@ -51,9 +52,15 @@ public class SaveService {
                 .build();
     }
 
-    private String upload(MultipartFile file) throws IOException {
+
+
+
+    private String upload(MultipartFile file) throws IOException, FileNameNotFoundException {
         Date time = new Date();
         String strFileName = file.getOriginalFilename();
+        if(strFileName==null){
+            throw new FileNameNotFoundException();
+        }
         int pos = strFileName.lastIndexOf(".");
         String ext = strFileName.substring(pos + 1);
         String fileName = time.getTime() + randomToken() + "." + ext;
@@ -66,8 +73,7 @@ public class SaveService {
 
 
     private String randomToken() {
-        StringBuffer token = new StringBuffer();
-        Random rnd = new Random();
+        StringBuilder token = new StringBuilder();
         for (int i = 0; i < 10; i++) {
             int rIndex = rnd.nextInt(3);
             switch (rIndex) {
@@ -83,12 +89,14 @@ public class SaveService {
                     // 0-9
                     token.append((rnd.nextInt(10)));
                     break;
+                default:
+                    break;
             }
         }
         return token.toString();
     }
 
-    public ResponseEntity<ResponseDto> registerImageIntoServer(MultipartFile file) throws IOException {
+    public ResponseEntity<ResponseDto> registerImageIntoServer(MultipartFile file) throws IOException, FileNameNotFoundException {
         String imagePath = upload(file);
         HashMap<String, String> hashMap = new LinkedHashMap<>();
         hashMap.put("image", imagePath);

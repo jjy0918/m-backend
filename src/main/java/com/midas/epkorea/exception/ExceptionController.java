@@ -14,7 +14,7 @@ public class ExceptionController {
         ResponseDto responseDto = ResponseDto.builder()
                 .message("페이지 번호가 0이하이거나, 전체 페이지 개수보다 많습니다.")
                 .build();
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({MissingServletRequestParameterException.class,RequiredValueException.class})
@@ -22,7 +22,7 @@ public class ExceptionController {
         ResponseDto responseDto = ResponseDto.builder()
                 .message("필수 인자가 입력되지 않았습니다.")
                 .build();
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({UserPresentException.class})
@@ -30,7 +30,7 @@ public class ExceptionController {
         ResponseDto responseDto = ResponseDto.builder()
                 .message("이미 존재하는 계정입니다.")
                 .build();
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({UserNotPresentException.class})
@@ -38,16 +38,25 @@ public class ExceptionController {
         ResponseDto responseDto = ResponseDto.builder()
                 .message("존재하지 않는 계정입니다.")
                 .build();
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({ProductManagementNotPresentException.class})
-    public ResponseEntity<ResponseDto> ProductManagementNotPresentException(){
+    public ResponseEntity<ResponseDto> productManagementNotPresentException(){
         ResponseDto responseDto = ResponseDto.builder()
                 .message("제품 관리 항목이 존재하지 않습니다.")
                 .build();
 
-        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({FileNameNotFoundException.class})
+    public ResponseEntity<ResponseDto> fileNameNotFoundException(){
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("파일이 존재하지 않습니다.")
+                .build();
+
+        return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -1,10 +1,7 @@
 package com.midas.epkorea.dto;
 
 import com.midas.epkorea.exception.PageException;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

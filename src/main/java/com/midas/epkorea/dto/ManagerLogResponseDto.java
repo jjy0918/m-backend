@@ -14,21 +14,20 @@ public class ManagerLogResponseDto {
 
     private List<ManagerLogDto> managerLogList;
 
-    public ManagerLogResponseDto(Page page) {
+    public ManagerLogResponseDto(Page<ManagerLog> page) {
         this.pageInfo = new PageDto(page);
         managerLogList = new ArrayList<>();
-        page.getContent().forEach(managerLog ->{
-            ManagerLog ml = (ManagerLog) managerLog;
+        page.getContent().forEach(managerLog ->
             managerLogList.add(
                     ManagerLogDto.builder()
-                            .id(ml.getId())
-                            .no(ml.getNo())
-                            .loginDate(ChangeDateTime.TimestampToString(ml.getLoginDate()))
-                            .ip(ml.getIp())
-                            .sessionId(ml.getSessionId())
-                            .successLogin(ml.isSuccessLogin())
+                            .id(managerLog.getId())
+                            .no(managerLog.getNo())
+                            .loginDate(ChangeDateTime.timestampToString(managerLog.getLoginDate()))
+                            .ip(managerLog.getIp())
+                            .sessionId(managerLog.getSessionId())
+                            .successLogin(managerLog.isSuccessLogin())
                             .build()
-            );
-        } );
+            )
+        );
     }
 }

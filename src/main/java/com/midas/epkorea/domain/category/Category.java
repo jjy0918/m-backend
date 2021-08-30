@@ -1,12 +1,13 @@
 package com.midas.epkorea.domain.category;
 
-import com.midas.epkorea.domain.productmanagetment.ProductManagement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table
 @Entity

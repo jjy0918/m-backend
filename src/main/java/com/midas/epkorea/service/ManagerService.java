@@ -36,7 +36,7 @@ public class ManagerService {
                 .data(managerResponseDto)
                 .build();
 
-        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }
 
 
@@ -63,7 +63,7 @@ public class ManagerService {
                 .message(message)
                 .data(managerResponseDto)
                 .build();
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
 
     }
 
@@ -82,7 +82,7 @@ public class ManagerService {
         ResponseDto responseDto = ResponseDto.builder()
                 .message("manager create")
                 .build();
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.CREATED );
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED );
 
 
     }
@@ -97,7 +97,7 @@ public class ManagerService {
         ResponseDto responseDto = ResponseDto.builder()
                 .message("manager update")
                 .build();
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.CREATED );
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED );
 
     }
 
@@ -110,7 +110,7 @@ public class ManagerService {
                 .data(getManager)
                 .build();
 
-        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
 
     }
 
@@ -124,7 +124,7 @@ public class ManagerService {
                 .message("delete manager")
                 .build();
 
-        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
 
 
     }
@@ -133,8 +133,8 @@ public class ManagerService {
     private Manager getManager(int no) throws UserNotPresentException {
         Optional<Manager> managerOptional = managerRepository.findById(no);
 
-        Manager getManager = managerOptional.orElseThrow(()->new UserNotPresentException());
+        return managerOptional.orElseThrow(UserNotPresentException::new);
 
-        return getManager;
+
     }
 }
