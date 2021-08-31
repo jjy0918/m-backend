@@ -17,27 +17,21 @@ public class ManagerLogService {
     private final ManagerLogRepository managerLogRepository;
 
 
-    public ResponseEntity<ResponseDto> getAllManagerLog(int page) {
+    public ResponseEntity<ManagerLogResponseDto> getAllManagerLog(int page) {
 
         Pageable pageRequest = PageDto.getPageRequest(page);
 
         // 따로 개수 확인하는 것이 좋은가???
         ManagerLogResponseDto managerLogResponseDto = new ManagerLogResponseDto(managerLogRepository.findAll(pageRequest));
-        ResponseDto responseDto = ResponseDto.builder()
-                .message("find all managersLog")
-                .data(managerLogResponseDto)
-                .build();
+        managerLogResponseDto.setMessage("find all managersLog");
 
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(managerLogResponseDto, HttpStatus.OK);
     }
 
-    public ResponseEntity<ResponseDto> searchManagerLog(int page, String word) {
+    public ResponseEntity<ManagerLogResponseDto> searchManagerLog(int page, String word) {
         Pageable pageRequest = PageDto.getPageRequest(page);
         ManagerLogResponseDto managerLogResponseDto = new ManagerLogResponseDto(managerLogRepository.findAllByIdContains(word,pageRequest));
-        ResponseDto responseDto = ResponseDto.builder()
-                .message("find managerLog by id")
-                .data(managerLogResponseDto)
-                .build();
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        managerLogResponseDto.setMessage("find managerLog by id");
+        return new ResponseEntity<>(managerLogResponseDto, HttpStatus.OK);
     }
 }

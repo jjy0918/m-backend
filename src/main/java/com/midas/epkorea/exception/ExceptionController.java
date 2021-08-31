@@ -3,6 +3,7 @@ package com.midas.epkorea.exception;
 import com.midas.epkorea.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,7 +18,7 @@ public class ExceptionController {
         return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({MissingServletRequestParameterException.class,RequiredValueException.class})
+    @ExceptionHandler({MissingServletRequestParameterException.class,RequiredValueException.class, MethodArgumentNotValidException.class})
     public ResponseEntity<ResponseDto> missingServletRequestParameterException(){
         ResponseDto responseDto = ResponseDto.builder()
                 .message("필수 인자가 입력되지 않았습니다.")

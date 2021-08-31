@@ -2,23 +2,27 @@ package com.midas.epkorea.dto;
 
 import com.midas.epkorea.domain.managerlog.ManagerLog;
 import com.midas.epkorea.util.ChangeDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ManagerLogResponseDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ManagerLogResponseDto extends ResponseDto{
     private PageDto pageInfo;
 
-    private List<ManagerLogDto> managerLogList;
+    private List<ManagerLogDto> data;
 
     public ManagerLogResponseDto(Page<ManagerLog> page) {
         this.pageInfo = new PageDto(page);
-        managerLogList = new ArrayList<>();
+        data = new ArrayList<>();
         page.getContent().forEach(managerLog ->
-            managerLogList.add(
+                data.add(
                     ManagerLogDto.builder()
                             .id(managerLog.getId())
                             .no(managerLog.getNo())

@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
@@ -14,8 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 public class ConstructionRequestDto {
 
+    @NotBlank
     private String name;
 
+    @Min(1)
+    @Max(12)
     private int category;
 
     private String thumbnail;

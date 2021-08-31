@@ -36,14 +36,12 @@ public class PageDto {
       if(this.totalPages !=0 && this.pageNumber > this.totalPages) {
           throw new PageException();
       }
-
-
   }
     public static Pageable getPageRequest(int page){
         Pageable pageRequest=null;
         try{
             // 페이지 번호, 시작, 정렬
-            pageRequest = PageRequest.of(page, 10, Sort.by("no").descending());
+            pageRequest = PageRequest.of(page-1, 10, Sort.by("no").descending());
 
         }catch (IllegalArgumentException illException){
             // 요청하려는 페이지가 0이하인 작은 경우 예외 발생시킨다.

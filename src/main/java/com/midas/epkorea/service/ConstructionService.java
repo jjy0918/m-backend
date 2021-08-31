@@ -38,30 +38,22 @@ public class ConstructionService {
 
     private final ConstructionDetailImageRepository constructionDetailImageRepository;
 
-    public ResponseEntity<ResponseDto> getAllConstruction(int page) {
+    public ResponseEntity<ConstructionResponseDto> getAllConstruction(int page) {
         Pageable pageRequest = PageDto.getPageRequest(page);
-        ConstructionResponseDto contructionResponseDto = new ConstructionResponseDto(constructionRepository.findAll(pageRequest));
+        ConstructionResponseDto constructionResponseDto = new ConstructionResponseDto(constructionRepository.findAll(pageRequest));
+        constructionResponseDto.setMessage("find all construction");
 
-       ResponseDto responseDto = ResponseDto.builder()
-                .message("find all managersLog")
-                .data(contructionResponseDto)
-                .build();
-
-       return new ResponseEntity<>(responseDto, HttpStatus.OK);
+       return new ResponseEntity<>(constructionResponseDto, HttpStatus.OK);
 
     }
 
-    public ResponseEntity<ResponseDto> searchConstructionByName(int page, String word) {
+    public ResponseEntity<ConstructionResponseDto> searchConstructionByName(int page, String word) {
 
         Pageable pageRequest = PageDto.getPageRequest(page);
 
         ConstructionResponseDto constructionResponseDto = new ConstructionResponseDto(constructionRepository.findAllByNameContains(pageRequest,word));
-        ResponseDto responseDto = ResponseDto.builder()
-                .message("search construction by name")
-                .data(constructionResponseDto)
-                .build();
-
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        constructionResponseDto.setMessage("search construction by name");
+        return new ResponseEntity<>(constructionResponseDto, HttpStatus.OK);
 
 
     }

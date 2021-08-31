@@ -1,5 +1,6 @@
 package com.midas.epkorea.controller;
 
+import com.midas.epkorea.dto.ManagerResponseDto;
 import com.midas.epkorea.exception.RequiredValueException;
 import com.midas.epkorea.exception.UserNotPresentException;
 import com.midas.epkorea.exception.UserPresentException;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/manager")
 @RequiredArgsConstructor
@@ -19,8 +22,7 @@ public class ManagerController {
 
     // 관리자 전체 목록 받아오기
     @GetMapping()
-    public ResponseEntity<ResponseDto> getAllMangers(@RequestParam(defaultValue = "1") int page){
-        page--;
+    public ResponseEntity<ManagerResponseDto> getAllMangers(@RequestParam(defaultValue = "1") int page){
         return managerService.getAllManagers(page);
     }
 
@@ -32,23 +34,21 @@ public class ManagerController {
 
     // 관리자 검색
     @GetMapping("/search/{type}")
-    public ResponseEntity<ResponseDto> searchManagers(@RequestParam(defaultValue = "1") int page, @PathVariable String type, @RequestParam String word){
-        page--;
+    public ResponseEntity<ManagerResponseDto> searchManagers(@RequestParam(defaultValue = "1") int page, @PathVariable String type, @RequestParam String word){
         return managerService.searchManagers(page,type,word);
     }
 
     // 관리자 생성
     @PostMapping
-    public ResponseEntity<ResponseDto> createManager(@RequestBody ManagerRequestDto manager) throws UserPresentException, RequiredValueException {
-        manager.checkRequiredValue();
-        return managerService.createManager(manager);
+    public ResponseEntity<ResponseDto> createManager(@RequestBody @Valid ManagerRequestDto managerRequestDto) throws UserPresentException, RequiredValueException {
+        managerRequestDto.checkRequiredValue();
+        return managerService.createManager(managerRequestDto);
     }
 
     // 관리자 수정
     @PutMapping("/{no}")
-    public ResponseEntity<ResponseDto> editManager(@RequestBody ManagerRequestDto managerRequestDto, @PathVariable int no) throws RequiredValueException, UserNotPresentException {
+    public ResponseEntity<ResponseDto> editManager(@RequestBody @Valid ManagerRequestDto managerRequestDto, @PathVariable int no) throws RequiredValueException, UserNotPresentException {
         managerRequestDto.checkRequiredValue();
-
         return managerService.editManager(managerRequestDto,no);
     }
 

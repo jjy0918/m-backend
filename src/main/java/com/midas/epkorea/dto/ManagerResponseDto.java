@@ -9,17 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ManagerResponseDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class ManagerResponseDto extends ResponseDto {
 
     private PageDto pageInfo;
 
-    private List<ManagerListDto> managerList;
+    private List<ManagerListDto> data;
 
     public ManagerResponseDto(Page<Manager> page) {
         this.pageInfo = new PageDto(page);
-        managerList = new ArrayList<>();
+        data = new ArrayList<>();
         page.getContent().forEach(manager ->
-            managerList.add(
+                data.add(
               ManagerListDto.builder()
                       .id(manager.getId())
                       .belong(manager.getBelong())

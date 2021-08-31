@@ -39,18 +39,15 @@ public class ProductManagetmentService {
 
     }
 
-    public ResponseEntity<ResponseDto> getProductManagementList(int page) {
+    public ResponseEntity<ProductManagementResponseDto> getProductManagementList(int page) {
 
         Pageable pageRequest = PageDto.getPageRequest(page);
 
         ProductManagementResponseDto productManagementResponseDto = new ProductManagementResponseDto(productManagementRepository.findAll(pageRequest));
 //        ProductManagementResponseDto productManagementResponseDto = new ProductManagementResponseDto(productManagementRepository.findAllByCategoryIn(pageRequest,test));
-        ResponseDto responseDto = ResponseDto.builder()
-                .message("find all productManagement")
-                .data(productManagementResponseDto)
-                .build();
+        productManagementResponseDto.setMessage("find all productManagement");
 
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(productManagementResponseDto, HttpStatus.OK);
     }
 
     public ResponseEntity<ResponseDto> getProductManagementByNo(int no) throws ProductManagementNotPresentException {
@@ -65,16 +62,13 @@ public class ProductManagetmentService {
 
     }
 
-    public ResponseEntity<ResponseDto> searchProductManagement(int page, String word) {
+    public ResponseEntity<ProductManagementResponseDto> searchProductManagement(int page, String word) {
         Pageable pageRequest = PageDto.getPageRequest(page);
 
         ProductManagementResponseDto productManagementResponseDto = new ProductManagementResponseDto(productManagementRepository.findAllByNameContains(pageRequest,word));
-        ResponseDto responseDto = ResponseDto.builder()
-                .message("search productManagement by name")
-                .data(productManagementResponseDto)
-                .build();
+        productManagementResponseDto.setMessage("search productManagement by name");
 
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(productManagementResponseDto, HttpStatus.OK);
 
     }
 

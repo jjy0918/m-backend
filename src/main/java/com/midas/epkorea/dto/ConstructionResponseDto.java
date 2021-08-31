@@ -2,24 +2,30 @@ package com.midas.epkorea.dto;
 
 import com.midas.epkorea.domain.construction.Construction;
 import com.midas.epkorea.util.ChangeDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Data
-public class ConstructionResponseDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ConstructionResponseDto extends ResponseDto{
     private PageDto pageInfo;
 
-    private List<ConstructionDto> constructionDtoList;
+    private List<ConstructionDto> data;
 
 
     public ConstructionResponseDto(Page<Construction> page) {
+        super();
         this.pageInfo = new PageDto(page);
-        this.constructionDtoList = new ArrayList<>();
+        this.data = new ArrayList<>();
         page.getContent().forEach(construction ->
-            constructionDtoList.add(
+                data.add(
                     ConstructionDto.builder()
                             .no(construction.getNo())
                             .category(construction.getCategoryDetail().getChild())

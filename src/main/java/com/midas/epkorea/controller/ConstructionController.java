@@ -2,13 +2,15 @@ package com.midas.epkorea.controller;
 
 import com.midas.epkorea.dto.ConstructionEditRequestDto;
 import com.midas.epkorea.dto.ConstructionRequestDto;
+import com.midas.epkorea.dto.ConstructionResponseDto;
 import com.midas.epkorea.dto.ResponseDto;
 import com.midas.epkorea.exception.ProductManagementNotPresentException;
-import com.midas.epkorea.exception.RequiredValueException;
 import com.midas.epkorea.service.ConstructionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/construction")
@@ -19,15 +21,12 @@ public class ConstructionController {
 
 
     @GetMapping
-    public ResponseEntity<ResponseDto> getAllConstruction(@RequestParam(defaultValue = "1") int page ){
-        page--;
-
-        return constructionService.getAllConstruction(page);
+    public ResponseEntity<ConstructionResponseDto> getAllConstruction(@RequestParam(defaultValue = "1") int page ){
+          return constructionService.getAllConstruction(page);
     }
 
     @GetMapping("/search/name")
-    public ResponseEntity<ResponseDto> searchConstructionByName(@RequestParam(defaultValue = "1") int page, @RequestParam String word){
-        page--;
+    public ResponseEntity<ConstructionResponseDto> searchConstructionByName(@RequestParam(defaultValue = "1") int page, @RequestParam String word){
         return constructionService.searchConstructionByName(page,word);
     }
 
@@ -37,8 +36,7 @@ public class ConstructionController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDto> createConstruction(@RequestBody ConstructionRequestDto requestDto) throws RequiredValueException {
-        requestDto.check();
+    public ResponseEntity<ResponseDto> createConstruction(@RequestBody @Valid ConstructionRequestDto requestDto) {
         return constructionService.createConstruction(requestDto);
     }
 
