@@ -1,5 +1,6 @@
 package com.midas.epkorea.controller;
 
+import com.midas.epkorea.dto.ConstructionEditRequestDto;
 import com.midas.epkorea.dto.ConstructionRequestDto;
 import com.midas.epkorea.dto.ResponseDto;
 import com.midas.epkorea.exception.ProductManagementNotPresentException;
@@ -41,9 +42,14 @@ public class ConstructionController {
         return constructionService.createConstruction(requestDto);
     }
 
-    @DeleteMapping({"/{no}"})
+    @DeleteMapping("/{no}")
     public ResponseEntity<ResponseDto> deleteConstruction(@PathVariable int no) throws ProductManagementNotPresentException {
         return constructionService.deleteConstruction(no);
+    }
+
+    @PutMapping("/{no}")
+    public ResponseEntity<ResponseDto> editConstruction(@PathVariable int no, @RequestBody ConstructionEditRequestDto requestDto) throws ProductManagementNotPresentException {
+        return constructionService.editConstruction(no, requestDto);
     }
 
 

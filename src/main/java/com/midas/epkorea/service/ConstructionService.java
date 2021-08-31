@@ -13,11 +13,14 @@ import com.midas.epkorea.domain.constructiontable.ConstructionTableRepository;
 import com.midas.epkorea.dto.*;
 import com.midas.epkorea.exception.ProductManagementNotPresentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +32,7 @@ public class ConstructionService {
 
     private final ConstructionDetailRepository constructionDetailRepository;
 
-    private final ConstructionTableRepository productManagementTable;
+    private final ConstructionTableRepository constructionTableRepository;
 
     private final ConstructionBannerRepository constructionBannerRepository;
 
@@ -72,7 +75,7 @@ public class ConstructionService {
             if(tableListRequestDto.checkTableListItem() && cnt[0] < 10){
                 ConstructionTable constructionTable = (ConstructionTable.builder().build());
                 constructionTable.createConstructionTableByRequest(tableListRequestDto, no);
-                productManagementTable.save(constructionTable);
+                constructionTableRepository.save(constructionTable);
                 cnt[0]++;
             }
         });
@@ -149,10 +152,15 @@ public class ConstructionService {
 
     }
 
-    public ResponseEntity<ResponseDto> deleteConstruction(int no) throws ProductManagementNotPresentException {
+    private Construction getConstructionByNo(int no) throws ProductManagementNotPresentException {
         Optional<Construction> constructionOptional = constructionRepository.findById(no);
 
-        Construction construction= constructionOptional.orElseThrow(ProductManagementNotPresentException::new);
+        return constructionOptional.orElseThrow(ProductManagementNotPresentException::new);
+    }
+
+    public ResponseEntity<ResponseDto> deleteConstruction(int no) throws ProductManagementNotPresentException {
+
+        Construction construction = getConstructionByNo(no);
 
         constructionRepository.delete(construction);
 
@@ -163,4 +171,72 @@ public class ConstructionService {
         return new ResponseEntity<>(responseDto,HttpStatus.OK);
 
     }
+
+    public ResponseEntity<ResponseDto> editConstruction(int no, ConstructionEditRequestDto requestDto) throws ProductManagementNotPresentException {
+
+        Construction construction = getConstructionByNo(no);
+        construction.createConstructionByRequest(requestDto);
+        constructionRepository.save(construction);
+
+        saveConstructionTable(requestDto.getTableList(),no);
+
+        saveConstructionBanner(requestDto.getBanner(), no);
+
+        saveConstructionDetailImage(requestDto.getDetailImage(), no);
+
+        HashMap<String,List<Integer>> deleteFailNumbers=new HashMap<>();
+
+        if(requestDto.getDeleteBannerNum()!=null){
+            List<Integer> finalDeleteFail = new ArrayList<>();
+            requestDto.getDeleteBannerNum().forEach(num->{
+                try{
+                    constructionBannerRepository.deleteById(num);
+                }
+                catch (EmptyResultDataAccessException e){
+                    finalDeleteFail.add(num);
+                }
+            });
+            deleteFailNumbers.put("Fail DeleteBanner",finalDeleteFail);
+
+        }
+
+        if(requestDto.getDeleteTableNum()!=null){
+            List<Integer> finalDeleteFail = new ArrayList<>();
+            requestDto.getDeleteTableNum().forEach(num->{
+                try{
+                    constructionTableRepository.deleteById(num);
+                }
+                catch (EmptyResultDataAccessException e){
+                    finalDeleteFail.add(num);
+                }
+            });
+            deleteFailNumbers.put("Fail DeleteTable",finalDeleteFail);
+
+        }
+
+        if(requestDto.getDeleteDetailImageNum()!=null){
+            List<Integer> finalDeleteFail = new ArrayList<>();
+            requestDto.getDeleteDetailImageNum().forEach(num->{
+                try{
+                    constructionDetailImageRepository.deleteById(num);
+                }
+                catch (EmptyResultDataAccessException e){
+                    finalDeleteFail.add(num);
+
+                }
+            });
+            deleteFailNumbers.put("Fail DeleteDetailImage",finalDeleteFail);
+
+        }
+
+        ResponseDto responseDto = ResponseDto.builder()
+                .data(deleteFailNumbers)
+                .message("edit construction by no")
+                .build();
+
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+
+    }
+
+
 }
