@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("manager")
+@RequestMapping("/api/manager")
 @RequiredArgsConstructor
 public class ManagerController {
 

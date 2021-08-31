@@ -36,4 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
+# 계정 정보 파일
 application-credentials.properties
+
+# 프론트
+!**/resources/static

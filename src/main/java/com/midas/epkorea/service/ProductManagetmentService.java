@@ -44,6 +44,7 @@ public class ProductManagetmentService {
         Pageable pageRequest = PageDto.getPageRequest(page);
 
         ProductManagementResponseDto productManagementResponseDto = new ProductManagementResponseDto(productManagementRepository.findAll(pageRequest));
+//        ProductManagementResponseDto productManagementResponseDto = new ProductManagementResponseDto(productManagementRepository.findAllByCategoryIn(pageRequest,test));
         ResponseDto responseDto = ResponseDto.builder()
                 .message("find all productManagement")
                 .data(productManagementResponseDto)

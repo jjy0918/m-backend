@@ -5,9 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Table
@@ -22,6 +20,7 @@ import java.sql.Timestamp;
 public class Manager {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int no;
     private Timestamp registrationDate;
 
@@ -40,6 +39,8 @@ public class Manager {
     private boolean cmCooling;
     private boolean cmLighting;
     private boolean cmRailroad;
+
+    private String role;
 
 
     public void createManagerByManagerRequest(ManagerRequestDto managerRequestDto){

@@ -28,8 +28,13 @@ public class ManagerRequestDto {
     private boolean cmLighting;
     private boolean cmRailroad;
 
+    private String role;
+
     public void checkRequiredValue() throws RequiredValueException {
         if(this.id==null || this.name==null || this.belong == null || this.phoneNumber==null || this.password==null){
+            throw new RequiredValueException();
+        }
+        if(this.role!=null && !this.role.equals("ADMIN") && !this.role.equals("MANAGER") && !this.role.equals("USER")){
             throw new RequiredValueException();
         }
     }

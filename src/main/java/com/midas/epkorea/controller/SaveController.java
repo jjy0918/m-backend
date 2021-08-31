@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/save")
+@RequestMapping("/api/save")
 public class SaveController {
 
     private final SaveService saveService;
