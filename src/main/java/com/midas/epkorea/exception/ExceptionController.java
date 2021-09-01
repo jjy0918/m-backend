@@ -39,7 +39,7 @@ public class ExceptionController {
         ResponseDto responseDto = ResponseDto.builder()
                 .message("존재하지 않는 계정입니다.")
                 .build();
-        return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(responseDto, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({ProductManagementNotPresentException.class})
@@ -48,7 +48,7 @@ public class ExceptionController {
                 .message("항목이 존재하지 않습니다.")
                 .build();
 
-        return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(responseDto,HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({FileNameNotFoundException.class})
@@ -57,7 +57,7 @@ public class ExceptionController {
                 .message("파일이 존재하지 않습니다.")
                 .build();
 
-        return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(responseDto,HttpStatus.NOT_FOUND);
     }
 
 }

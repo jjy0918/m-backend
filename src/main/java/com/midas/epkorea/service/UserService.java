@@ -1,0 +1,45 @@
+package com.midas.epkorea.service;
+
+import com.midas.epkorea.domain.user.User;
+import com.midas.epkorea.domain.user.UserRespository;
+import com.midas.epkorea.dto.ResponseDto;
+import com.midas.epkorea.dto.UserRequestDto;
+import com.midas.epkorea.exception.UserPresentException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+    private final UserRespository userRespository;
+
+    public ResponseEntity<ResponseDto> createUser(UserRequestDto requestDto) throws UserPresentException {
+        Optional<User> user = userRespository.findById(requestDto.getId());
+
+        if(user.isPresent()){
+            throw new UserPresentException();
+        }
+
+        User newUser = User.builder()
+                .id(requestDto.getId())
+                .name(requestDto.getName())
+                .password(requestDto.getPassword())
+                .phoneNumber(requestDto.getPhoneNumber())
+                .build();
+
+        userRespository.save(newUser);
+
+        ResponseDto responseDto =ResponseDto.builder()
+                .message("create User")
+                .data(newUser)
+                .build();
+
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+
+    }
+}
