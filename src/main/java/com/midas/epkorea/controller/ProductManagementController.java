@@ -1,17 +1,17 @@
 package com.midas.epkorea.controller;
 
-import com.midas.epkorea.dto.ProductManagementResponseDto;
-import com.midas.epkorea.exception.ProductManagementNotPresentException;
-import com.midas.epkorea.exception.RequiredValueException;
-import com.midas.epkorea.service.ProductManagetmentService;
 import com.midas.epkorea.dto.ProductManagementRequestDto;
+import com.midas.epkorea.dto.ProductManagementResponseDto;
 import com.midas.epkorea.dto.ResponseDto;
+import com.midas.epkorea.exception.ProductManagementNotPresentException;
+import com.midas.epkorea.service.ProductManagetmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/productmanagement")

@@ -31,11 +31,13 @@ public class Manager {
     private String password;
 
     private boolean pmUpsSts;
+    private boolean pmEss;
     private boolean pmCooling;
     private boolean pmLighting;
     private boolean pmRailroad;
 
     private boolean cmUpsSts;
+    private boolean cmEss;
     private boolean cmCooling;
     private boolean cmLighting;
     private boolean cmRailroad;
@@ -52,14 +54,19 @@ public class Manager {
         this.password=managerRequestDto.getPassword();
 
         this.pmUpsSts = managerRequestDto.isPmUpsSts();
+        this.pmEss = managerRequestDto.isPmEss();
         this.pmCooling = managerRequestDto.isPmCooling();
         this.pmLighting = managerRequestDto.isPmLighting();
         this.pmRailroad = managerRequestDto.isPmRailroad();
 
         this.cmUpsSts = managerRequestDto.isCmUpsSts();
+        this.cmEss = managerRequestDto.isCmEss();
+
         this.cmCooling = managerRequestDto.isCmCooling();
         this.cmLighting = managerRequestDto.isCmLighting();
         this.cmRailroad = managerRequestDto.isCmRailroad();
+
+        this.role=managerRequestDto.getRole();
 
     }
 

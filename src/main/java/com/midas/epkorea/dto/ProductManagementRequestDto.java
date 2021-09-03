@@ -16,7 +16,7 @@ import java.util.List;
 public class ProductManagementRequestDto {
 
     @Min(value = 1,message = "1보다 작은 값은 사용할 수 없습니다.")
-    @Max(value = 12,message = "12보다 큰 값은 사용할 수 없습니다.")
+    @Max(value = 14,message = "14보다 큰 값은 사용할 수 없습니다.")
     private int category;
 
     @NotBlank

@@ -6,23 +6,23 @@ import com.midas.epkorea.exception.UserNotPresentException;
 import com.midas.epkorea.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/login")
 public class LoginController {
 
-    private LoginService loginService;
+    private final LoginService loginService;
 
     @PostMapping
-    public ResponseEntity<ResponseDto> login(@RequestBody @Valid LoginRequestDto requestDto) throws UserNotPresentException {
-        return loginService.login(requestDto);
+    public ResponseEntity<ResponseDto> login(@RequestBody @Valid LoginRequestDto requestDto, HttpServletRequest httpServletRequest, HttpSession httpSession) throws UserNotPresentException {
+        return loginService.login(requestDto,httpServletRequest.getRemoteAddr(),httpSession.getId());
     }
 
 }

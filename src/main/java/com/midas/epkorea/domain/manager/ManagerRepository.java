@@ -14,4 +14,6 @@ public interface ManagerRepository extends JpaRepository<Manager,Integer> {
     Page<Manager> findAllByIdContainsOrBelongContains(String id, String belong, Pageable pageable);
 
     Optional<Manager> findById(String id);
+
+    Optional<Manager> findByIdAndPassword(String id,String password);
 }

@@ -2,11 +2,11 @@ package com.midas.epkorea.controller;
 
 import com.midas.epkorea.dto.ManagerLogResponseDto;
 import com.midas.epkorea.service.ManagerLogService;
-import com.midas.epkorea.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/managerlog")
 @RequiredArgsConstructor

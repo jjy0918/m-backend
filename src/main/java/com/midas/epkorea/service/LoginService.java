@@ -2,6 +2,8 @@ package com.midas.epkorea.service;
 
 import com.midas.epkorea.domain.manager.Manager;
 import com.midas.epkorea.domain.manager.ManagerRepository;
+import com.midas.epkorea.domain.managerlog.ManagerLog;
+import com.midas.epkorea.domain.managerlog.ManagerLogRepository;
 import com.midas.epkorea.domain.user.User;
 import com.midas.epkorea.domain.user.UserRespository;
 import com.midas.epkorea.dto.LoginRequestDto;
@@ -20,11 +22,25 @@ public class LoginService {
 
     private final ManagerRepository managerRepository;
     private final UserRespository userRespository;
+    private final ManagerLogRepository managerLogRepository;
+
+    private void setManagerLog(boolean successLogin,String id,String ip,String sessionId){
+        ManagerLog managerLog= ManagerLog.builder()
+                .id(id)
+                .ip(ip)
+                .sessionId(sessionId)
+                .successLogin(successLogin)
+                .build();
+
+        managerLogRepository.save(managerLog);
+    }
 
 
-    public ResponseEntity<ResponseDto> login(LoginRequestDto requestDto) throws UserNotPresentException {
+    public ResponseEntity<ResponseDto> login(LoginRequestDto requestDto,String ip,String sessionId) throws UserNotPresentException {
         if(requestDto.getType().equals("MANAGER") || requestDto.getType().equals("ADMIN")){
-            Optional<Manager> managerOptional = managerRepository.findById(requestDto.getId());
+            Optional<Manager> managerOptional = managerRepository.findByIdAndPassword(requestDto.getId(),requestDto.getPassword());
+
+            setManagerLog(managerOptional.isPresent(),requestDto.getId(),ip,sessionId);
 
             ResponseDto responseDto = ResponseDto.builder()
                     .data(managerOptional.orElseThrow(UserNotPresentException::new))

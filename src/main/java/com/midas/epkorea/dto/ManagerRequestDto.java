@@ -18,19 +18,21 @@ public class ManagerRequestDto {
     private String id;
     @NotBlank
     private String name;
-    @NotBlank
+
     private String belong;
-    @NotBlank
+
     private String phoneNumber;
     @NotBlank
     private String password;
 
     private boolean pmUpsSts;
+    private boolean pmEss;
     private boolean pmCooling;
     private boolean pmLighting;
     private boolean pmRailroad;
 
     private boolean cmUpsSts;
+    private boolean cmEss;
     private boolean cmCooling;
     private boolean cmLighting;
     private boolean cmRailroad;

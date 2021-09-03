@@ -1,10 +1,9 @@
 package com.midas.epkorea.domain.managerlog;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Getter
@@ -12,11 +11,13 @@ import java.sql.Timestamp;
 @ToString
 @Table
 @Entity
+@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
 public class ManagerLog {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int no;
 
     private Timestamp loginDate;
