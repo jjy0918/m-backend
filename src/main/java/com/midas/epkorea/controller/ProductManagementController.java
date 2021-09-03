@@ -43,6 +43,11 @@ public class ProductManagementController {
         return productManagetmentService.createProductManagement(requestDto);
     }
 
+    @PutMapping("/{no}")
+    public ResponseEntity<ResponseDto> editProductManagemnet(@RequestBody @Valid ProductManagementRequestDto requestDto,@PathVariable int no) throws ProductManagementNotPresentException {
+        return productManagetmentService.editProductManagemnet(requestDto,no);
+    }
+
 
 
 

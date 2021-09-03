@@ -100,5 +100,40 @@ public class ProductManagetmentService {
     }
 
 
+    public ResponseEntity<ResponseDto> editProductManagemnet(ProductManagementRequestDto requestDto,int no) throws ProductManagementNotPresentException {
 
+
+        Optional<ProductManagement> productManagement = productManagementRepository.findById(no);
+
+        ProductManagement newProductManagement = productManagement.orElseThrow(ProductManagementNotPresentException::new);
+        newProductManagement.createProductManagementByRequest(requestDto);
+
+        for(ProductManagementTable pt : newProductManagement.getProductManagementTableList()){
+            productManagementTableRepository.delete(pt);
+        }
+
+
+        if(requestDto.getTableList()!=null){
+            final int[] cnt={0};
+            requestDto.getTableList().forEach(pmtr ->{
+                if(pmtr.checkTableListItem() && cnt[0] < 10){
+                    ProductManagementTable productManagementTable = (ProductManagementTable.builder().build());
+                    productManagementTable.createProductManagementTableByRequest(pmtr, no);
+                    productManagementTableRepository.save(productManagementTable);
+                    cnt[0]++;
+                }
+
+
+            });
+        }
+
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("ProductManagement edit")
+                .build();
+        return new ResponseEntity<>(responseDto, HttpStatus.OK );
+
+
+
+
+    }
 }
