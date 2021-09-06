@@ -108,6 +108,9 @@ public class ProductManagetmentService {
         ProductManagement newProductManagement = productManagement.orElseThrow(ProductManagementNotPresentException::new);
         newProductManagement.createProductManagementByRequest(requestDto);
 
+        productManagementRepository.save(newProductManagement);
+
+        // 기존 table 삭제
         for(ProductManagementTable pt : newProductManagement.getProductManagementTableList()){
             productManagementTableRepository.delete(pt);
         }
