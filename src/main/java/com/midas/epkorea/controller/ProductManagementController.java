@@ -48,6 +48,11 @@ public class ProductManagementController {
         return productManagetmentService.editProductManagemnet(requestDto,no);
     }
 
+    @DeleteMapping("/{no}")
+    public ResponseEntity<ResponseDto> deleteProductManager(@PathVariable int no) throws ProductManagementNotPresentException {
+        return productManagetmentService.deleteProductManager(no);
+    }
+
 
 
 

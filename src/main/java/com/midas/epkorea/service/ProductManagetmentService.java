@@ -139,4 +139,24 @@ public class ProductManagetmentService {
 
 
     }
+
+    public ResponseEntity<ResponseDto> deleteProductManager(int no) throws ProductManagementNotPresentException {
+
+        Optional<ProductManagement> productManagement = productManagementRepository.findById(no);
+
+        ProductManagement newProductManagement = productManagement.orElseThrow(ProductManagementNotPresentException::new);
+
+        for(ProductManagementTable pt : newProductManagement.getProductManagementTableList()){
+            productManagementTableRepository.delete(pt);
+        }
+
+        productManagementRepository.delete(newProductManagement);
+
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("delete ProduceManagemnet : "+no)
+                .build();
+
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+
+    }
 }
