@@ -21,7 +21,7 @@ public class ConstructionRequestDto {
     private String name;
 
     @Min(1)
-    @Max(12)
+    @Max(14)
     private int category;
 
     private String thumbnail;

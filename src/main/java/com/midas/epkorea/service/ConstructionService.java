@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,10 +150,16 @@ public class ConstructionService {
 
         return constructionOptional.orElseThrow(ProductManagementNotPresentException::new);
     }
-
+    @Transactional
     public ResponseEntity<ResponseDto> deleteConstruction(int no) throws ProductManagementNotPresentException {
 
         Construction construction = getConstructionByNo(no);
+
+        constructionTableRepository.deleteByConstructionNo(no);
+
+        constructionBannerRepository.deleteByConstructionNo(no);
+
+        constructionDetailImageRepository.deleteByConstructionNo(no);
 
         constructionRepository.delete(construction);
 
