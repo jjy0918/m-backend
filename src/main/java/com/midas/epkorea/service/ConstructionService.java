@@ -13,15 +13,12 @@ import com.midas.epkorea.domain.constructiontable.ConstructionTableRepository;
 import com.midas.epkorea.dto.*;
 import com.midas.epkorea.exception.ProductManagementNotPresentException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -171,11 +168,17 @@ public class ConstructionService {
 
     }
 
-    public ResponseEntity<ResponseDto> editConstruction(int no, ConstructionEditRequestDto requestDto) throws ProductManagementNotPresentException {
+    public ResponseEntity<ResponseDto> editConstruction(int no, ConstructionRequestDto requestDto) throws ProductManagementNotPresentException {
 
         Construction construction = getConstructionByNo(no);
         construction.createConstructionByRequest(requestDto);
         constructionRepository.save(construction);
+
+        constructionTableRepository.deleteByConstructionNo(no);
+
+        constructionBannerRepository.deleteByConstructionNo(no);
+
+        constructionDetailImageRepository.deleteByConstructionNo(no);
 
         saveConstructionTable(requestDto.getTableList(),no);
 
@@ -183,53 +186,7 @@ public class ConstructionService {
 
         saveConstructionDetailImage(requestDto.getDetailImage(), no);
 
-        HashMap<String,List<Integer>> deleteFailNumbers=new HashMap<>();
-
-        if(requestDto.getDeleteBannerNum()!=null){
-            List<Integer> finalDeleteFail = new ArrayList<>();
-            requestDto.getDeleteBannerNum().forEach(num->{
-                try{
-                    constructionBannerRepository.deleteById(num);
-                }
-                catch (EmptyResultDataAccessException e){
-                    finalDeleteFail.add(num);
-                }
-            });
-            deleteFailNumbers.put("Fail DeleteBanner",finalDeleteFail);
-
-        }
-
-        if(requestDto.getDeleteTableNum()!=null){
-            List<Integer> finalDeleteFail = new ArrayList<>();
-            requestDto.getDeleteTableNum().forEach(num->{
-                try{
-                    constructionTableRepository.deleteById(num);
-                }
-                catch (EmptyResultDataAccessException e){
-                    finalDeleteFail.add(num);
-                }
-            });
-            deleteFailNumbers.put("Fail DeleteTable",finalDeleteFail);
-
-        }
-
-        if(requestDto.getDeleteDetailImageNum()!=null){
-            List<Integer> finalDeleteFail = new ArrayList<>();
-            requestDto.getDeleteDetailImageNum().forEach(num->{
-                try{
-                    constructionDetailImageRepository.deleteById(num);
-                }
-                catch (EmptyResultDataAccessException e){
-                    finalDeleteFail.add(num);
-
-                }
-            });
-            deleteFailNumbers.put("Fail DeleteDetailImage",finalDeleteFail);
-
-        }
-
         ResponseDto responseDto = ResponseDto.builder()
-                .data(deleteFailNumbers)
                 .message("edit construction by no")
                 .build();
 

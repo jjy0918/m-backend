@@ -8,6 +8,7 @@ import com.midas.epkorea.domain.user.User;
 import com.midas.epkorea.domain.user.UserRespository;
 import com.midas.epkorea.dto.LoginRequestDto;
 import com.midas.epkorea.dto.ResponseDto;
+import com.midas.epkorea.dto.UserResponseDto;
 import com.midas.epkorea.exception.UserNotPresentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,9 +42,9 @@ public class LoginService {
             Optional<Manager> managerOptional = managerRepository.findByIdAndPassword(requestDto.getId(),requestDto.getPassword());
 
             setManagerLog(managerOptional.isPresent(),requestDto.getId(),ip,sessionId);
-
+            UserResponseDto userResponseDto = new UserResponseDto(managerOptional.orElseThrow(UserNotPresentException::new));
             ResponseDto responseDto = ResponseDto.builder()
-                    .data(managerOptional.orElseThrow(UserNotPresentException::new))
+                    .data(userResponseDto)
                     .message("login success")
                     .build();
 
