@@ -168,6 +168,7 @@ public class ConstructionService {
 
     }
 
+    @Transactional
     public ResponseEntity<ResponseDto> editConstruction(int no, ConstructionRequestDto requestDto) throws ProductManagementNotPresentException {
 
         Construction construction = getConstructionByNo(no);

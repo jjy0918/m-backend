@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @RequiredArgsConstructor
@@ -43,10 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception { // 9
-        auth.userDetailsService(userService);
+        auth.userDetailsService(userService)
                 // 해당 서비스(userService)에서는 UserDetailsService를 implements해서
                 // loadUserByUsername() 구현해야함 (서비스 참고)
-//                .passwordEncoder(new BCryptPasswordEncoder());
+                .passwordEncoder(new BCryptPasswordEncoder());
+
+
     }
 
 

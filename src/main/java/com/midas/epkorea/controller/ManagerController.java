@@ -1,5 +1,6 @@
 package com.midas.epkorea.controller;
 
+import com.midas.epkorea.dto.ManagerEditRequestDto;
 import com.midas.epkorea.dto.ManagerResponseDto;
 import com.midas.epkorea.exception.RequiredValueException;
 import com.midas.epkorea.exception.UserNotPresentException;
@@ -48,7 +49,7 @@ public class ManagerController {
 
     // 관리자 수정
     @PutMapping("/{no}")
-    public ResponseEntity<ResponseDto> editManager(@RequestBody @Valid ManagerRequestDto managerRequestDto, @PathVariable int no) throws RequiredValueException, UserNotPresentException {
+    public ResponseEntity<ResponseDto> editManager(@RequestBody @Valid ManagerEditRequestDto managerRequestDto, @PathVariable int no) throws RequiredValueException, UserNotPresentException {
         managerRequestDto.checkRequiredValue();
         return managerService.editManager(managerRequestDto,no);
     }

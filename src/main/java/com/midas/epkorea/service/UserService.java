@@ -50,7 +50,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         return managerRepository.findById(username).orElseThrow(()->new UsernameNotFoundException((username)));
     }
 }

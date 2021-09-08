@@ -2,12 +2,9 @@ package com.midas.epkorea.service;
 
 import com.midas.epkorea.domain.manager.Manager;
 import com.midas.epkorea.domain.manager.ManagerRepository;
+import com.midas.epkorea.dto.*;
 import com.midas.epkorea.exception.UserNotPresentException;
 import com.midas.epkorea.exception.UserPresentException;
-import com.midas.epkorea.dto.ManagerRequestDto;
-import com.midas.epkorea.dto.ManagerResponseDto;
-import com.midas.epkorea.dto.PageDto;
-import com.midas.epkorea.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -81,7 +78,7 @@ public class ManagerService {
     }
 
     @Transactional
-    public ResponseEntity<ResponseDto> editManager(ManagerRequestDto managerRequestDto, int no) throws UserNotPresentException {
+    public ResponseEntity<ResponseDto> editManager(ManagerEditRequestDto managerRequestDto, int no) throws UserNotPresentException {
 
         Manager getManager = getManager(no);
 

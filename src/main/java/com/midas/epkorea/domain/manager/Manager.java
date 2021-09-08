@@ -1,5 +1,6 @@
 package com.midas.epkorea.domain.manager;
 
+import com.midas.epkorea.dto.ManagerEditRequestDto;
 import com.midas.epkorea.dto.ManagerRequestDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -51,13 +52,18 @@ public class Manager implements UserDetails {
     private String role;
 
 
-    public void createManagerByManagerRequest(ManagerRequestDto managerRequestDto){
+    public void createManagerByManagerRequest(ManagerEditRequestDto managerRequestDto){
 
         this.id= managerRequestDto.getId();
         this.name=managerRequestDto.getName();
         this.belong= managerRequestDto.getBelong();
         this.phoneNumber=managerRequestDto.getPhoneNumber();
-        this.password=managerRequestDto.getPassword();
+
+        if(managerRequestDto instanceof ManagerRequestDto){
+            this.password=((ManagerRequestDto) managerRequestDto).getPassword();
+
+        }
+
 
         this.pmUpsSts = managerRequestDto.isPmUpsSts();
         this.pmEss = managerRequestDto.isPmEss();
