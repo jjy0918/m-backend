@@ -27,6 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomLoginSuccessHandler customLoginSuccessHandler;
     private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
     // 필터 체인으로 등록해서, 정적 리소스는 항상 통과 가능하도록 설정한다.
     @Override
     public void configure(WebSecurity web) throws Exception
@@ -44,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 제품, 구축 사례 등록, 수정 등은 ADMIN, MANAGER 권한을 가진 사용자만 가능
                 .antMatchers("/api/construction/**","/api/save/**","/api/productmanagement/**","/api/login","/api/login/check/manager").hasAnyRole(ADMIN,MANAGER)
                 // 인증이 필요 없는 부분 : 로그인, 회원가입
-                .antMatchers("/user").permitAll();
+                .antMatchers("/user").permitAll().and()
+                .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint);
 
 
 
