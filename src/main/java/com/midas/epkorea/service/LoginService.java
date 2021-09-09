@@ -36,6 +36,14 @@ public class LoginService {
         managerLogRepository.save(managerLog);
     }
 
+    public void setManagerLogFailure(String id, String ip, String sessionId){
+        setManagerLog(false,id,ip,sessionId);
+    }
+
+    public void setManagerLogSuccess(String id, String ip, String sessionId){
+        setManagerLog(true,id,ip,sessionId);
+    }
+
 
     public ResponseEntity<ResponseDto> login(LoginRequestDto requestDto,String ip,String sessionId) throws UserNotPresentException {
         if(requestDto.getType().equals("MANAGER") || requestDto.getType().equals("ADMIN")){

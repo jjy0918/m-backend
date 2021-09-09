@@ -1,13 +1,13 @@
 package com.midas.epkorea.controller;
 
 import com.midas.epkorea.dto.ManagerEditRequestDto;
+import com.midas.epkorea.dto.ManagerRequestDto;
 import com.midas.epkorea.dto.ManagerResponseDto;
+import com.midas.epkorea.dto.ResponseDto;
 import com.midas.epkorea.exception.RequiredValueException;
 import com.midas.epkorea.exception.UserNotPresentException;
 import com.midas.epkorea.exception.UserPresentException;
 import com.midas.epkorea.service.ManagerService;
-import com.midas.epkorea.dto.ManagerRequestDto;
-import com.midas.epkorea.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +59,8 @@ public class ManagerController {
     public ResponseEntity<ResponseDto> deleteManger(@PathVariable int no) throws UserNotPresentException {
         return managerService.deleteManger(no);
     }
+
+
 
 
 

@@ -1,16 +1,12 @@
 package com.midas.epkorea.controller;
 
-import com.midas.epkorea.dto.LoginRequestDto;
-import com.midas.epkorea.dto.ResponseDto;
-import com.midas.epkorea.exception.UserNotPresentException;
-import com.midas.epkorea.service.LoginService;
+import com.midas.epkorea.domain.manager.Manager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin("*")
 @RestController
@@ -18,11 +14,19 @@ import javax.validation.Valid;
 @RequestMapping("/api/login")
 public class LoginController {
 
-    private final LoginService loginService;
+    @GetMapping
+    public String getUserInfo(@AuthenticationPrincipal Manager manager){
+        return manager.getId();
+    }
 
-    @PostMapping
-    public ResponseEntity<ResponseDto> login(@RequestBody @Valid LoginRequestDto requestDto, HttpServletRequest httpServletRequest, HttpSession httpSession) throws UserNotPresentException {
-        return loginService.login(requestDto,httpServletRequest.getRemoteAddr(),httpSession.getId());
+    @GetMapping("/check/admin")
+    public boolean checkAdmin(){
+        return true;
+    }
+
+    @GetMapping("/check/manager")
+    public boolean checkManager(){
+        return true;
     }
 
 }
