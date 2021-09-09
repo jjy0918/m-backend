@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -60,7 +61,8 @@ public class Manager implements UserDetails {
         this.phoneNumber=managerRequestDto.getPhoneNumber();
 
         if(managerRequestDto instanceof ManagerRequestDto){
-            this.password=((ManagerRequestDto) managerRequestDto).getPassword();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            this.password=passwordEncoder.encode(((ManagerRequestDto) managerRequestDto).getPassword());
 
         }
 
@@ -86,7 +88,8 @@ public class Manager implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority(this.role));
+        // hasRole에서 검증 시 ROLE_이 붙어야 검증 가능
+        roles.add(new SimpleGrantedAuthority("ROLE_"+this.role));
         return roles;
     }
 

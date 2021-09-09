@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ManagerService {
+public class ManagerService implements UserDetailsService {
 
     private final ManagerRepository managerRepository;
 
@@ -66,6 +69,7 @@ public class ManagerService {
         }
 
         Manager saveManager = Manager.builder().build();
+
         saveManager.createManagerByManagerRequest(manager);
         managerRepository.save(saveManager);
 
@@ -124,7 +128,12 @@ public class ManagerService {
         Optional<Manager> managerOptional = managerRepository.findById(no);
 
         return managerOptional.orElseThrow(UserNotPresentException::new);
+    }
 
+    @Override
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 
+        Optional<Manager> managerOptional = managerRepository.findById(id);
+        return  managerOptional.orElseThrow(()->new UsernameNotFoundException(id));
     }
 }
