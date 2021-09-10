@@ -24,7 +24,6 @@ public class ManagerService implements UserDetailsService {
     private final ManagerRepository managerRepository;
 
 
-
     public ResponseEntity<ManagerResponseDto> getAllManagers(int page){
 
         Pageable pageRequest = PageDto.getPageRequest(page);
