@@ -3,10 +3,7 @@ package com.midas.epkorea.domain.productmanagetment;
 import com.midas.epkorea.domain.category.Category;
 import com.midas.epkorea.domain.productmanagementtable.ProductManagementTable;
 import com.midas.epkorea.dto.ProductManagementRequestDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -22,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @DynamicInsert
 @DynamicUpdate
+@ToString
 public class ProductManagement {
 
     @Id
