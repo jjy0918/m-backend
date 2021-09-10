@@ -92,7 +92,6 @@ public class Manager implements UserDetails {
 
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> roles = new HashSet<>();

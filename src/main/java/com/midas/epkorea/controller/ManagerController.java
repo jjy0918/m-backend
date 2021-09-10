@@ -1,5 +1,6 @@
 package com.midas.epkorea.controller;
 
+import com.midas.epkorea.domain.manager.Manager;
 import com.midas.epkorea.dto.ManagerEditRequestDto;
 import com.midas.epkorea.dto.ManagerRequestDto;
 import com.midas.epkorea.dto.ManagerResponseDto;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @CrossOrigin("*")
@@ -49,15 +52,32 @@ public class ManagerController {
 
     // 관리자 수정
     @PutMapping("/{no}")
-    public ResponseEntity<ResponseDto> editManager(@RequestBody @Valid ManagerEditRequestDto managerRequestDto, @PathVariable int no) throws RequiredValueException, UserNotPresentException {
+    public ResponseEntity<ResponseDto> editManager(@RequestBody @Valid ManagerEditRequestDto managerRequestDto, @PathVariable int no, HttpServletRequest request) throws RequiredValueException, UserNotPresentException {
         managerRequestDto.checkRequiredValue();
-        return managerService.editManager(managerRequestDto,no);
+        
+        ResponseEntity<ResponseDto> result = managerService.editManager(managerRequestDto,no);
+        
+        // 에러 발생 x => 정상 수정
+        // 현재 로그인 된 값이 변경되었다 => 재로그인 필요
+        if(Manager.getManager().getNo() == no){
+            HttpSession httpSession = request.getSession();
+            httpSession.invalidate();
+        }
+        return result;
     }
 
     // 관리자 삭제
     @DeleteMapping("/{no}")
-    public ResponseEntity<ResponseDto> deleteManger(@PathVariable int no) throws UserNotPresentException {
-        return managerService.deleteManger(no);
+    public ResponseEntity<ResponseDto> deleteManger(@PathVariable int no, HttpServletRequest request) throws UserNotPresentException {
+        ResponseEntity<ResponseDto> result = managerService.deleteManger(no);
+
+        // 에러 발생 x => 정상 수정
+        // 현재 로그인 된 값이 변경되었다 => 재로그인 필요
+        if(Manager.getManager().getNo() == no){
+            HttpSession httpSession = request.getSession();
+            httpSession.invalidate();
+        }
+        return result;
     }
 
 
