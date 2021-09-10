@@ -1,5 +1,6 @@
 package com.midas.epkorea.service;
 
+import com.midas.epkorea.domain.category.Category;
 import com.midas.epkorea.domain.construction.Construction;
 import com.midas.epkorea.domain.construction.ConstructionDetail;
 import com.midas.epkorea.domain.construction.ConstructionDetailRepository;
@@ -10,10 +11,16 @@ import com.midas.epkorea.domain.constructiondetailimage.ConstructionDetailImage;
 import com.midas.epkorea.domain.constructiondetailimage.ConstructionDetailImageRepository;
 import com.midas.epkorea.domain.constructiontable.ConstructionTable;
 import com.midas.epkorea.domain.constructiontable.ConstructionTableRepository;
+import com.midas.epkorea.domain.manager.Manager;
 import com.midas.epkorea.dto.*;
 import com.midas.epkorea.exception.ProductManagementNotPresentException;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,6 +28,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+
+import static com.midas.epkorea.domain.construction.QConstruction.construction;
 
 @Service
 @RequiredArgsConstructor
@@ -36,9 +45,81 @@ public class ConstructionService {
 
     private final ConstructionDetailImageRepository constructionDetailImageRepository;
 
-    public ResponseEntity<ConstructionResponseDto> getAllConstruction(int page) {
+    private final JPAQueryFactory queryFactory;
+
+    // 카테고리에 맞는 BooleanBuilder 생성
+    private BooleanBuilder getWhereBuilderByManager(){
+
+        Manager nowManager = Manager.getManager();
+
+        List<Integer> categoryNumber = Category.getCMCategoryNumbers(nowManager);
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        categoryNumber.forEach(nowNum-> builder.or(construction.category.eq(nowNum)));
+
+        if(!builder.hasValue()){
+            builder.and(construction.category.eq(-1));
+        }
+
+        return builder;
+    }
+
+
+    private ConstructionResponseDto getCMList(int page,BooleanBuilder builder){
+
         Pageable pageRequest = PageDto.getPageRequest(page);
-        ConstructionResponseDto constructionResponseDto = new ConstructionResponseDto(constructionRepository.findAll(pageRequest));
+
+        List<Construction> content = queryFactory
+                .selectFrom(construction)
+                .where(
+                        builder
+                )
+                .offset(pageRequest.getOffset())
+                .limit(pageRequest.getPageSize())
+                .orderBy(construction.no.desc())
+                .fetch();
+        ConstructionResponseDto constructionResponseDto;
+
+        if(!content.isEmpty()){
+            JPAQuery<Construction> countQuery = queryFactory
+                    .selectFrom(construction)
+                    .where(
+                            builder
+                    );
+
+            Page<Construction> pp = PageableExecutionUtils.getPage(content, pageRequest, countQuery::fetchCount);
+
+            constructionResponseDto = new ConstructionResponseDto(pp);
+        }
+        else{
+            constructionResponseDto = new ConstructionResponseDto();
+        }
+
+        return constructionResponseDto;
+    }
+
+    private boolean checkAuth(int categoryNum){
+        Manager nowManager = Manager.getManager();
+
+        List<Integer> categoryNumber = Category.getCMCategoryNumbers(nowManager);
+
+        boolean checkAuth=false;
+
+        for(int i=0;i<categoryNumber.size() && !checkAuth;i++){
+            checkAuth = (categoryNumber.get(i) == categoryNum);
+        }
+
+        return checkAuth;
+    }
+
+
+    public ResponseEntity<ConstructionResponseDto> getAllConstruction(int page) {
+
+        BooleanBuilder builder = getWhereBuilderByManager();
+
+        ConstructionResponseDto constructionResponseDto = getCMList(page,builder);
+
         constructionResponseDto.setMessage("find all construction");
 
        return new ResponseEntity<>(constructionResponseDto, HttpStatus.OK);
@@ -47,9 +128,13 @@ public class ConstructionService {
 
     public ResponseEntity<ConstructionResponseDto> searchConstructionByName(int page, String word) {
 
-        Pageable pageRequest = PageDto.getPageRequest(page);
+        BooleanBuilder builder = getWhereBuilderByManager();
+        builder.and(construction.name.contains(word));
 
-        ConstructionResponseDto constructionResponseDto = new ConstructionResponseDto(constructionRepository.findAllByNameContains(pageRequest,word));
+        ConstructionResponseDto constructionResponseDto = getCMList(page,builder);
+
+
+
         constructionResponseDto.setMessage("search construction by name");
         return new ResponseEntity<>(constructionResponseDto, HttpStatus.OK);
 
@@ -109,6 +194,16 @@ public class ConstructionService {
 
         Construction construction= Construction.builder().build();
         construction.createConstructionByRequest(requestDto);
+
+        if(!checkAuth(construction.getCategory())){
+            ResponseDto responseDto = ResponseDto.builder()
+                    .message("fail create construction")
+                    .data(null)
+                    .build();
+
+            return new ResponseEntity<>(responseDto,HttpStatus.FORBIDDEN);
+        }
+
         constructionRepository.save(construction);
 
         int no = construction.getNo();
@@ -131,6 +226,17 @@ public class ConstructionService {
         Optional<ConstructionDetail> constructionDetailOptional = constructionDetailRepository.findById(no);
 
         ConstructionDetail constructionDetail= constructionDetailOptional.orElseThrow(ProductManagementNotPresentException::new);
+
+        if(!checkAuth(constructionDetail.getCategory())){
+            ResponseDto responseDto = ResponseDto.builder()
+                    .message("fail find detail construction")
+                    .data(null)
+                    .build();
+
+            return new ResponseEntity<>(responseDto,HttpStatus.FORBIDDEN);
+        }
+
+
         ResponseDto responseDto = ResponseDto.builder()
                 .message("find constructionDetail by no")
                 .data(constructionDetail)
@@ -152,6 +258,15 @@ public class ConstructionService {
 
         Construction construction = getConstructionByNo(no);
 
+        if(!checkAuth(construction.getCategory())){
+            ResponseDto responseDto = ResponseDto.builder()
+                    .message("fail delete construction")
+                    .data(null)
+                    .build();
+
+            return new ResponseEntity<>(responseDto,HttpStatus.FORBIDDEN);
+        }
+
         constructionTableRepository.deleteByConstructionNo(no);
 
         constructionBannerRepository.deleteByConstructionNo(no);
@@ -172,7 +287,27 @@ public class ConstructionService {
     public ResponseEntity<ResponseDto> editConstruction(int no, ConstructionRequestDto requestDto) throws ProductManagementNotPresentException {
 
         Construction construction = getConstructionByNo(no);
+
+        if(!checkAuth(construction.getCategory())){
+            ResponseDto responseDto = ResponseDto.builder()
+                    .message("fail edit construction")
+                    .data(null)
+                    .build();
+
+            return new ResponseEntity<>(responseDto,HttpStatus.FORBIDDEN);
+        }
+
         construction.createConstructionByRequest(requestDto);
+
+        if(!checkAuth(construction.getCategory())){
+            ResponseDto responseDto = ResponseDto.builder()
+                    .message("fail new Edit construction")
+                    .data(null)
+                    .build();
+
+            return new ResponseEntity<>(responseDto,HttpStatus.FORBIDDEN);
+        }
+
         constructionRepository.save(construction);
 
         constructionTableRepository.deleteByConstructionNo(no);

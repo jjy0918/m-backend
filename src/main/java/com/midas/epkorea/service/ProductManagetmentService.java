@@ -20,9 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -43,38 +40,12 @@ public class ProductManagetmentService {
 
     private final JPAQueryFactory queryFactory;
 
-    // 현재 세션에 존재하는 계정 가져오기
-    private Manager getManager(){
-        SecurityContext context = SecurityContextHolder.getContext();
-
-        Authentication authentication = context.getAuthentication();
-
-        return (Manager)authentication.getPrincipal();
-    }
-    
     // 번호로 관리자 받아오기
     private ProductManagement getProductManagement(int no) throws ProductManagementNotPresentException {
         Optional<ProductManagement> productManagement = productManagementRepository.findById(no);
 
         return productManagement.orElseThrow(ProductManagementNotPresentException::new);
 
-    }
-
-    // 카테고리에 맞는 BooleanBuilder 생성
-    private BooleanBuilder getWhereBuilderByManager(){
-        Manager nowManager = getManager();
-
-        List<Integer> categoryNumber = Category.getPMCategoryNumbers(nowManager);
-
-        BooleanBuilder builder = new BooleanBuilder();
-
-        categoryNumber.forEach(nowNum-> builder.or(productManagement.category.eq(nowNum)));
-
-        if(!builder.hasValue()){
-            builder.and(productManagement.category.eq(-1));
-        }
-
-        return builder;
     }
 
     private ProductManagementResponseDto getPMList(int page,BooleanBuilder builder){
@@ -91,6 +62,7 @@ public class ProductManagetmentService {
                 .orderBy(productManagement.no.desc())
                 .fetch();
         ProductManagementResponseDto productManagementResponseDto;
+
         if(!content.isEmpty()){
             JPAQuery<ProductManagement> countQuery = queryFactory
                     .selectFrom(productManagement)
@@ -109,7 +81,27 @@ public class ProductManagetmentService {
         return productManagementResponseDto;
     }
 
+    // 카테고리에 맞는 BooleanBuilder 생성
+    private BooleanBuilder getWhereBuilderByManager(){
+
+        Manager nowManager = Manager.getManager();
+
+        List<Integer> categoryNumber = Category.getPMCategoryNumbers(nowManager);
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        categoryNumber.forEach(nowNum-> builder.or(productManagement.category.eq(nowNum)));
+
+        if(!builder.hasValue()){
+            builder.and(productManagement.category.eq(-1));
+        }
+
+        return builder;
+    }
+
+
     public ResponseEntity<ProductManagementResponseDto> getProductManagementList(int page) {
+
 
         BooleanBuilder builder = getWhereBuilderByManager();
 
@@ -121,7 +113,7 @@ public class ProductManagetmentService {
     }
 
     private boolean checkAuth(ProductManagement productManagement){
-        Manager nowManager = getManager();
+        Manager nowManager = Manager.getManager();
 
         List<Integer> categoryNumber = Category.getPMCategoryNumbers(nowManager);
 

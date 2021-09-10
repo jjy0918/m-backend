@@ -1,12 +1,17 @@
 package com.midas.epkorea.domain.manager;
 
+import com.midas.epkorea.domain.category.Category;
 import com.midas.epkorea.dto.ManagerEditRequestDto;
 import com.midas.epkorea.dto.ManagerRequestDto;
+import com.querydsl.core.BooleanBuilder;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -14,7 +19,10 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import static com.midas.epkorea.domain.productmanagetment.QProductManagement.productManagement;
 
 @Table
 @Entity
@@ -117,4 +125,15 @@ public class Manager implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    // 현재 세션에 존재하는 계정 가져오기
+    public static Manager getManager(){
+        SecurityContext context = SecurityContextHolder.getContext();
+
+        Authentication authentication = context.getAuthentication();
+
+        return (Manager)authentication.getPrincipal();
+    }
+
+
 }
