@@ -18,10 +18,18 @@ public class ExceptionController {
         return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({MissingServletRequestParameterException.class,RequiredValueException.class, MethodArgumentNotValidException.class})
+    @ExceptionHandler({MissingServletRequestParameterException.class,RequiredValueException.class})
     public ResponseEntity<ResponseDto> missingServletRequestParameterException(){
         ResponseDto responseDto = ResponseDto.builder()
                 .message("필수 인자가 입력되지 않았습니다.")
+                .build();
+        return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    public ResponseEntity<ResponseDto> notValidException(MethodArgumentNotValidException ex){
+        ResponseDto responseDto = ResponseDto.builder()
+                .message(ex.getBindingResult().getAllErrors().get(0).getDefaultMessage())
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
     }

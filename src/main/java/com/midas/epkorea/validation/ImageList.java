@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = ImageListValidation.class)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ImageList {
-    String message() default "리스트 내용 오류";
+    String message() default "리스트 내용에 비정상적인 내용이 있습니다.";
 
     Class<?>[] groups() default {};
 

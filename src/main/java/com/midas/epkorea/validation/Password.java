@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Password {
-    String message() default "암호 오류";
+    String message() default "비밀번호 길이가 8자 미만이거나 12자 초과입니다.";
 
     Class<?>[] groups() default {};
 

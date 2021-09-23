@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Constraint(validatedBy = BannerValidation.class)
 public @interface Banner {
-    String message() default "배너 리스트 개수 오류";
+    String message() default "배너 개수가 30개 초과이거나 비정상적인 값이 들어있습니다.";
 
     Class<?>[] groups() default {};
 

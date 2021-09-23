@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Role {
-    String message() default "권한 오류";
+    String message() default "정해진 권한이 아닙니다.";
 
     Class<?>[] groups() default {};
 

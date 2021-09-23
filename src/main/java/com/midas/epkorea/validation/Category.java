@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 public @interface Category {
 
-    String message() default "카테고리";
+    String message() default "카테고리 범위를 벗어났습니다.";
 
     Class<?>[] groups() default {};
 
