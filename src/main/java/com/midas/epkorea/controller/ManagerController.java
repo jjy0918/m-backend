@@ -1,9 +1,9 @@
 package com.midas.epkorea.controller;
 
 import com.midas.epkorea.domain.manager.Manager;
-import com.midas.epkorea.dto.ManagerEditRequestDto;
-import com.midas.epkorea.dto.ManagerRequestDto;
-import com.midas.epkorea.dto.ManagerResponseDto;
+import com.midas.epkorea.dto.request.ManagerEditRequestDto;
+import com.midas.epkorea.dto.request.ManagerRequestDto;
+import com.midas.epkorea.dto.response.ManagerResponseDto;
 import com.midas.epkorea.dto.ResponseDto;
 import com.midas.epkorea.exception.RequiredValueException;
 import com.midas.epkorea.exception.UserNotPresentException;

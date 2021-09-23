@@ -1,9 +1,7 @@
 package com.midas.epkorea.domain.manager;
 
-import com.midas.epkorea.domain.category.Category;
-import com.midas.epkorea.dto.ManagerEditRequestDto;
-import com.midas.epkorea.dto.ManagerRequestDto;
-import com.querydsl.core.BooleanBuilder;
+import com.midas.epkorea.dto.request.ManagerEditRequestDto;
+import com.midas.epkorea.dto.request.ManagerRequestDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -19,10 +17,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import static com.midas.epkorea.domain.productmanagetment.QProductManagement.productManagement;
 
 @Table
 @Entity

@@ -1,6 +1,6 @@
 package com.midas.epkorea.validation;
 
-import com.midas.epkorea.dto.BannerRequestDto;
+import com.midas.epkorea.dto.request.BannerRequestDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

@@ -1,6 +1,9 @@
-package com.midas.epkorea.dto;
+package com.midas.epkorea.dto.response;
 
 import com.midas.epkorea.domain.managerlog.ManagerLog;
+import com.midas.epkorea.dto.ManagerLogDto;
+import com.midas.epkorea.dto.PageDto;
+import com.midas.epkorea.dto.ResponseDto;
 import com.midas.epkorea.util.ChangeDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ManagerLogResponseDto extends ResponseDto{
+public class ManagerLogResponseDto extends ResponseDto {
     private PageDto pageInfo;
 
     private List<ManagerLogDto> data;

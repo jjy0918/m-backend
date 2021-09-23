@@ -1,6 +1,6 @@
 package com.midas.epkorea.controller;
 
-import com.midas.epkorea.dto.ManagerLogResponseDto;
+import com.midas.epkorea.dto.response.ManagerLogResponseDto;
 import com.midas.epkorea.service.ManagerLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

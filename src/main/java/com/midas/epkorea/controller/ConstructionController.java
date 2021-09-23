@@ -1,7 +1,7 @@
 package com.midas.epkorea.controller;
 
-import com.midas.epkorea.dto.ConstructionRequestDto;
-import com.midas.epkorea.dto.ConstructionResponseDto;
+import com.midas.epkorea.dto.request.ConstructionRequestDto;
+import com.midas.epkorea.dto.response.ConstructionResponseDto;
 import com.midas.epkorea.dto.ResponseDto;
 import com.midas.epkorea.exception.ProductManagementNotPresentException;
 import com.midas.epkorea.service.ConstructionService;

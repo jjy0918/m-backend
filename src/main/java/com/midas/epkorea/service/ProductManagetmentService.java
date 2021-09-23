@@ -7,6 +7,9 @@ import com.midas.epkorea.domain.productmanagementtable.ProductManagementTableRep
 import com.midas.epkorea.domain.productmanagetment.ProductManagement;
 import com.midas.epkorea.domain.productmanagetment.ProductManagementRepository;
 import com.midas.epkorea.dto.*;
+import com.midas.epkorea.dto.request.ProductManagementRequestDto;
+import com.midas.epkorea.dto.request.TableListRequestDto;
+import com.midas.epkorea.dto.response.ProductManagementResponseDto;
 import com.midas.epkorea.exception.ProductManagementNotPresentException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -45,7 +48,7 @@ public class ProductManagetmentService {
 
     }
 
-    private ProductManagementResponseDto getPMList(int page,BooleanBuilder builder){
+    private ProductManagementResponseDto getPMList(int page, BooleanBuilder builder){
 
         Pageable pageRequest = PageDto.getPageRequest(page);
 
@@ -97,7 +100,7 @@ public class ProductManagetmentService {
     }
 
 
-    private void saveTableList(List<TableListRequestDto> tableLists,int no){
+    private void saveTableList(List<TableListRequestDto> tableLists, int no){
         if(tableLists==null){
             return;
         }

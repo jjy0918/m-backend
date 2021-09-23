@@ -4,7 +4,7 @@ import com.midas.epkorea.domain.manager.ManagerRepository;
 import com.midas.epkorea.domain.user.User;
 import com.midas.epkorea.domain.user.UserRespository;
 import com.midas.epkorea.dto.ResponseDto;
-import com.midas.epkorea.dto.UserRequestDto;
+import com.midas.epkorea.dto.request.UserRequestDto;
 import com.midas.epkorea.exception.UserPresentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

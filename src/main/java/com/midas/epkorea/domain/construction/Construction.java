@@ -1,7 +1,7 @@
 package com.midas.epkorea.domain.construction;
 
 import com.midas.epkorea.domain.category.Category;
-import com.midas.epkorea.dto.ConstructionRequestDto;
+import com.midas.epkorea.dto.request.ConstructionRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

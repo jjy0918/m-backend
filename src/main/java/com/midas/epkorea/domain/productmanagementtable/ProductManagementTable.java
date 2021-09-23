@@ -1,6 +1,6 @@
 package com.midas.epkorea.domain.productmanagementtable;
 
-import com.midas.epkorea.dto.TableListRequestDto;
+import com.midas.epkorea.dto.request.TableListRequestDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

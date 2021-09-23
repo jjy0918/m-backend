@@ -1,4 +1,4 @@
-package com.midas.epkorea.dto;
+package com.midas.epkorea.dto.request;
 
 import com.midas.epkorea.validation.Role;
 import lombok.AllArgsConstructor;

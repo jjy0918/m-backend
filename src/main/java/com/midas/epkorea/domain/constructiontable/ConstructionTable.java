@@ -1,6 +1,6 @@
 package com.midas.epkorea.domain.constructiontable;
 
-import com.midas.epkorea.dto.TableListRequestDto;
+import com.midas.epkorea.dto.request.TableListRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

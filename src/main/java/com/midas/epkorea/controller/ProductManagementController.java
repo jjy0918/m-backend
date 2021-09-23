@@ -1,7 +1,7 @@
 package com.midas.epkorea.controller;
 
-import com.midas.epkorea.dto.ProductManagementRequestDto;
-import com.midas.epkorea.dto.ProductManagementResponseDto;
+import com.midas.epkorea.dto.request.ProductManagementRequestDto;
+import com.midas.epkorea.dto.response.ProductManagementResponseDto;
 import com.midas.epkorea.dto.ResponseDto;
 import com.midas.epkorea.exception.ProductManagementNotPresentException;
 import com.midas.epkorea.service.ProductManagetmentService;

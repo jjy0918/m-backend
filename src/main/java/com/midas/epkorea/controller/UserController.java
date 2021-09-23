@@ -1,7 +1,7 @@
 package com.midas.epkorea.controller;
 
 import com.midas.epkorea.dto.ResponseDto;
-import com.midas.epkorea.dto.UserRequestDto;
+import com.midas.epkorea.dto.request.UserRequestDto;
 import com.midas.epkorea.exception.UserPresentException;
 import com.midas.epkorea.service.UserService;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.midas.epkorea.validation;
 
-import com.midas.epkorea.dto.TableListRequestDto;
+import com.midas.epkorea.dto.request.TableListRequestDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

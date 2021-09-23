@@ -1,4 +1,4 @@
-package com.midas.epkorea.dto;
+package com.midas.epkorea.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.midas.epkorea.domain.constructionbanner;
 
-import com.midas.epkorea.dto.BannerRequestDto;
+import com.midas.epkorea.dto.request.BannerRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

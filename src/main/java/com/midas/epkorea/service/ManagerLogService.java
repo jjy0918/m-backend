@@ -1,9 +1,8 @@
 package com.midas.epkorea.service;
 
 import com.midas.epkorea.domain.managerlog.ManagerLogRepository;
-import com.midas.epkorea.dto.ManagerLogResponseDto;
+import com.midas.epkorea.dto.response.ManagerLogResponseDto;
 import com.midas.epkorea.dto.PageDto;
-import com.midas.epkorea.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

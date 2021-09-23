@@ -1,4 +1,4 @@
-package com.midas.epkorea.dto;
+package com.midas.epkorea.dto.response;
 
 import com.midas.epkorea.domain.manager.Manager;
 import lombok.Getter;

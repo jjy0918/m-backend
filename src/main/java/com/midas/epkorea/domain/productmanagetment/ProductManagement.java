@@ -2,7 +2,7 @@ package com.midas.epkorea.domain.productmanagetment;
 
 import com.midas.epkorea.domain.category.Category;
 import com.midas.epkorea.domain.productmanagementtable.ProductManagementTable;
-import com.midas.epkorea.dto.ProductManagementRequestDto;
+import com.midas.epkorea.dto.request.ProductManagementRequestDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

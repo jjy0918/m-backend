@@ -1,5 +1,6 @@
-package com.midas.epkorea.dto;
+package com.midas.epkorea.dto.request;
 
+import com.midas.epkorea.validation.Password;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,17 +8,20 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequestDto {
+@AllArgsConstructor
+public class UserRequestDto {
 
     @NotBlank
     private String id;
 
     @NotBlank
+    private String name;
+
+    @Password
     private String password;
 
     @NotBlank
-    private String type;
+    private String phoneNumber;
 
 }

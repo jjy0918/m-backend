@@ -21,17 +21,4 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class EpkoreaApplicationTests {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-
-    @DisplayName("전체 관리자 목록 조회")
-    @Test
-    void getAllManager() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/manager")).andExpect(status().isOk())
-                .andExpect((ResultMatcher) content().string(equalTo("rqwe")));
-
-    }
-
-
 }
