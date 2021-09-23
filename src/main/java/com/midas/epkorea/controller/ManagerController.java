@@ -46,23 +46,16 @@ public class ManagerController {
     // 관리자 생성
     @PostMapping
     public ResponseEntity<ResponseDto> createManager(@RequestBody @Valid ManagerRequestDto managerRequestDto) throws UserPresentException, RequiredValueException {
-        managerRequestDto.checkRequiredValue();
         return managerService.createManager(managerRequestDto);
     }
 
     // 관리자 수정
     @PutMapping("/{no}")
-    public ResponseEntity<ResponseDto> editManager(@RequestBody @Valid ManagerEditRequestDto managerRequestDto, @PathVariable int no, HttpServletRequest request) throws RequiredValueException, UserNotPresentException {
-        managerRequestDto.checkRequiredValue();
-        
+    public ResponseEntity<ResponseDto> editManager(@RequestBody @Valid ManagerEditRequestDto managerRequestDto, @PathVariable int no, HttpServletRequest request) throws UserNotPresentException {
+
         ResponseEntity<ResponseDto> result = managerService.editManager(managerRequestDto,no);
-        
-        // 에러 발생 x => 정상 수정
-        // 현재 로그인 된 값이 변경되었다 => 재로그인 필요
-        if(Manager.getManager().getNo() == no){
-            HttpSession httpSession = request.getSession();
-            httpSession.invalidate();
-        }
+
+        checkSession(no,request);
         return result;
     }
 
@@ -71,17 +64,17 @@ public class ManagerController {
     public ResponseEntity<ResponseDto> deleteManger(@PathVariable int no, HttpServletRequest request) throws UserNotPresentException {
         ResponseEntity<ResponseDto> result = managerService.deleteManger(no);
 
+        checkSession(no,request);
+        return result;
+    }
+
+    private  void checkSession(int no, HttpServletRequest request){
         // 에러 발생 x => 정상 수정
         // 현재 로그인 된 값이 변경되었다 => 재로그인 필요
         if(Manager.getManager().getNo() == no){
             HttpSession httpSession = request.getSession();
             httpSession.invalidate();
         }
-        return result;
     }
-
-
-
-
 
 }

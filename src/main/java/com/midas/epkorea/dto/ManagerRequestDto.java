@@ -1,11 +1,10 @@
 package com.midas.epkorea.dto;
 
+import com.midas.epkorea.validation.Password;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import javax.validation.constraints.NotBlank;
 
 @Getter
 @ToString
@@ -13,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class ManagerRequestDto extends ManagerEditRequestDto {
 
-    @NotBlank
+    @Password
     private String password;
 
 

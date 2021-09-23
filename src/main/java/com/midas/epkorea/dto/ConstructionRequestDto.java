@@ -1,13 +1,12 @@
 package com.midas.epkorea.dto;
 
 import com.midas.epkorea.exception.RequiredValueException;
+import com.midas.epkorea.validation.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -20,8 +19,7 @@ public class ConstructionRequestDto {
     @NotBlank
     private String name;
 
-    @Min(1)
-    @Max(14)
+    @Category
     private int category;
 
     private String thumbnail;

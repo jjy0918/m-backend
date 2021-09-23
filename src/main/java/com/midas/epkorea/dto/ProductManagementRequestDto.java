@@ -1,12 +1,10 @@
 package com.midas.epkorea.dto;
 
-import com.midas.epkorea.exception.RequiredValueException;
+import com.midas.epkorea.validation.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -15,8 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductManagementRequestDto {
 
-    @Min(value = 1,message = "1보다 작은 값은 사용할 수 없습니다.")
-    @Max(value = 14,message = "14보다 큰 값은 사용할 수 없습니다.")
+    @Category
     private int category;
 
     @NotBlank
@@ -31,12 +28,6 @@ public class ProductManagementRequestDto {
     private List<TableListRequestDto> tableList;
 
     private String editor;
-
-    public void check() throws RequiredValueException {
-        if(name==null || (category<1)){
-            throw new RequiredValueException();
-        }
-    }
 
 
 }

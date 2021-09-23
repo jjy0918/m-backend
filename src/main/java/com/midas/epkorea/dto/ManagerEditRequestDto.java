@@ -1,12 +1,13 @@
 package com.midas.epkorea.dto;
 
-import com.midas.epkorea.exception.RequiredValueException;
+import com.midas.epkorea.validation.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
+
 @Getter
 @ToString
 @NoArgsConstructor
@@ -34,12 +35,7 @@ public class ManagerEditRequestDto {
     private boolean cmLighting;
     private boolean cmRailroad;
 
-    @NotBlank
+    @Role
     private String role;
 
-    public void checkRequiredValue() throws RequiredValueException {
-        if(!this.role.equals("ADMIN") && !this.role.equals("MANAGER") && !this.role.equals("USER")){
-            throw new RequiredValueException();
-        }
-    }
 }

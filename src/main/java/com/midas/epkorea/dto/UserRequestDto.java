@@ -1,5 +1,6 @@
 package com.midas.epkorea.dto;
 
+import com.midas.epkorea.validation.Password;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class UserRequestDto {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @Password
     private String password;
 
     @NotBlank
