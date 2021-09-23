@@ -1,6 +1,7 @@
 package com.midas.epkorea.dto;
 
 import com.midas.epkorea.validation.Category;
+import com.midas.epkorea.validation.TableList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class ProductManagementRequestDto {
 
     private boolean expose;
 
+    @TableList
     private List<TableListRequestDto> tableList;
 
     private String editor;

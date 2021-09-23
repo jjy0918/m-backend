@@ -145,14 +145,10 @@ public class ConstructionService {
         if(tableList==null){
             return;
         }
-        final int[] cnt={0};
         tableList.forEach(tableListRequestDto ->{
-            if(tableListRequestDto.checkTableListItem() && cnt[0] < 10){
-                ConstructionTable constructionTable = (ConstructionTable.builder().build());
-                constructionTable.createConstructionTableByRequest(tableListRequestDto, no);
-                constructionTableRepository.save(constructionTable);
-                cnt[0]++;
-            }
+            ConstructionTable constructionTable = (ConstructionTable.builder().build());
+            constructionTable.createConstructionTableByRequest(tableListRequestDto, no);
+            constructionTableRepository.save(constructionTable);
         });
     }
 
@@ -160,14 +156,10 @@ public class ConstructionService {
         if(banner==null){
             return;
         }
-        final int[] cnt={0};
         banner.forEach(bannerRequestDto ->{
-            if(bannerRequestDto.checkBannerItem() && cnt[0] < 30){
-                ConstructionBanner constructionBanner = (ConstructionBanner.builder().build());
-                constructionBanner.createConstructionBannerByRequest(bannerRequestDto, no);
-                constructionBannerRepository.save(constructionBanner);
-                cnt[0]++;
-            }
+            ConstructionBanner constructionBanner = (ConstructionBanner.builder().build());
+            constructionBanner.createConstructionBannerByRequest(bannerRequestDto, no);
+            constructionBannerRepository.save(constructionBanner);
         });
     }
 

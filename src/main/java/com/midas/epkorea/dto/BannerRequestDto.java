@@ -14,7 +14,7 @@ public class BannerRequestDto {
     private String image;
 
     public boolean checkBannerItem(){
-        return name!=null && image!=null;
+        return name!=null && image!=null && !name.isEmpty() && !image.isEmpty();
     }
 
 }

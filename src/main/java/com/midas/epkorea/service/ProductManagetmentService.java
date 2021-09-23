@@ -6,10 +6,7 @@ import com.midas.epkorea.domain.productmanagementtable.ProductManagementTable;
 import com.midas.epkorea.domain.productmanagementtable.ProductManagementTableRepository;
 import com.midas.epkorea.domain.productmanagetment.ProductManagement;
 import com.midas.epkorea.domain.productmanagetment.ProductManagementRepository;
-import com.midas.epkorea.dto.PageDto;
-import com.midas.epkorea.dto.ProductManagementRequestDto;
-import com.midas.epkorea.dto.ProductManagementResponseDto;
-import com.midas.epkorea.dto.ResponseDto;
+import com.midas.epkorea.dto.*;
 import com.midas.epkorea.exception.ProductManagementNotPresentException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -100,6 +97,21 @@ public class ProductManagetmentService {
     }
 
 
+    private void saveTableList(List<TableListRequestDto> tableLists,int no){
+        if(tableLists==null){
+            return;
+        }
+        tableLists.forEach(pmtr ->{
+            ProductManagementTable productManagementTable = (ProductManagementTable.builder().build());
+            productManagementTable.createProductManagementTableByRequest(pmtr, no);
+            productManagementTableRepository.save(productManagementTable);
+
+        });
+    }
+
+
+
+
     public ResponseEntity<ProductManagementResponseDto> getProductManagementList(int page) {
 
 
@@ -181,26 +193,13 @@ public class ProductManagetmentService {
 
         int no = productManagement.getNo();
 
-        if(requestDto.getTableList()!=null){
-            final int[] cnt={0};
-            requestDto.getTableList().forEach(pmtr ->{
-                if(pmtr.checkTableListItem() && cnt[0] < 10){
-                    ProductManagementTable productManagementTable = (ProductManagementTable.builder().build());
-                    productManagementTable.createProductManagementTableByRequest(pmtr, no);
-                    productManagementTableRepository.save(productManagementTable);
-                    cnt[0]++;
-                }
-
-
-            });
-        }
+        saveTableList(requestDto.getTableList(),no);
 
         ResponseDto responseDto = ResponseDto.builder()
                 .message("ProductManagement create")
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED );
     }
-
 
     public ResponseEntity<ResponseDto> editProductManagemnet(ProductManagementRequestDto requestDto,int no) throws ProductManagementNotPresentException {
 
@@ -238,29 +237,12 @@ public class ProductManagetmentService {
             productManagementTableRepository.delete(pt);
         }
 
-
-        if(requestDto.getTableList()!=null){
-            final int[] cnt={0};
-            requestDto.getTableList().forEach(pmtr ->{
-                if(pmtr.checkTableListItem() && cnt[0] < 10){
-                    ProductManagementTable productManagementTable = (ProductManagementTable.builder().build());
-                    productManagementTable.createProductManagementTableByRequest(pmtr, no);
-                    productManagementTableRepository.save(productManagementTable);
-                    cnt[0]++;
-                }
-
-
-            });
-        }
+        saveTableList(requestDto.getTableList(),no);
 
         ResponseDto responseDto = ResponseDto.builder()
                 .message("ProductManagement edit")
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.OK );
-
-
-
-
     }
 
     public ResponseEntity<ResponseDto> deleteProductManager(int no) throws ProductManagementNotPresentException {

@@ -46,7 +46,7 @@ public class ConstructionController {
     }
 
     @PutMapping("/{no}")
-    public ResponseEntity<ResponseDto> editConstruction(@PathVariable int no, @RequestBody ConstructionRequestDto requestDto) throws ProductManagementNotPresentException {
+    public ResponseEntity<ResponseDto> editConstruction(@PathVariable int no, @RequestBody @Valid ConstructionRequestDto requestDto) throws ProductManagementNotPresentException {
         return constructionService.editConstruction(no, requestDto);
     }
 

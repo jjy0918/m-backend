@@ -13,7 +13,7 @@ public class TableListRequestDto {
     private String text;
 
     public boolean checkTableListItem(){
-        return title!=null && text!=null;
+        return title!=null && text!=null && !title.isEmpty() && !text.isEmpty();
     }
 
 }
