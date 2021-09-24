@@ -76,7 +76,7 @@ public class ManagerService implements UserDetailsService {
         managerRepository.save(saveManager);
 
         ResponseDto responseDto = ResponseDto.builder()
-                .message("manager create")
+                .message("관리자 생성에 성공하였습니다.")
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED );
 
@@ -84,14 +84,21 @@ public class ManagerService implements UserDetailsService {
     }
 
     @Transactional
-    public ResponseEntity<ResponseDto> editManager(ManagerEditRequestDto managerRequestDto, int no) throws UserNotPresentException {
+    public ResponseEntity<ResponseDto> editManager(ManagerEditRequestDto managerRequestDto, int no) throws UserNotPresentException, UserPresentException {
 
         Manager getManager = getManager(no);
+
+        Optional<Manager> managerOptional = managerRepository.findById(managerRequestDto.getId());
+
+        // 누른 아이디 말고 변경하려는 아이디가 이미 존재하는 경우
+        if(managerOptional.isPresent() && !managerOptional.get().getId().equals(getManager.getId())){
+            throw new UserPresentException();
+        }
 
         getManager.createManagerByManagerRequest(managerRequestDto);
 
         ResponseDto responseDto = ResponseDto.builder()
-                .message("manager update")
+                .message("관리자 수정에 성공하였습니다.")
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED );
 
@@ -117,7 +124,7 @@ public class ManagerService implements UserDetailsService {
         managerRepository.delete(getManager);
 
         ResponseDto responseDto = ResponseDto.builder()
-                .message("delete manager")
+                .message("관리자 삭제에 성공하였습니다.")
                 .build();
 
         return new ResponseEntity<>(responseDto,HttpStatus.OK);

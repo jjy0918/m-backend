@@ -183,7 +183,7 @@ public class ProductManagetmentService {
 
         if(!checkAuth(productManagement)){
             ResponseDto responseDto = ResponseDto.builder()
-                    .message("fail create productManagement")
+                    .message("제품관리 등록에 실패하였습니다.")
                     .data(null)
                     .build();
 
@@ -199,7 +199,7 @@ public class ProductManagetmentService {
         saveTableList(requestDto.getTableList(),no);
 
         ResponseDto responseDto = ResponseDto.builder()
-                .message("ProductManagement create")
+                .message("제품관리 등록에 성공하였습니다.")
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED );
     }
@@ -214,7 +214,7 @@ public class ProductManagetmentService {
         // 수정하려는 데이터에 권한이 있는가.
         if(!checkAuth(newProductManagement)){
             ResponseDto responseDto = ResponseDto.builder()
-                    .message("fail edit productManagement")
+                    .message("해당 권한이 없습니다.")
                     .data(null)
                     .build();
 
@@ -226,7 +226,7 @@ public class ProductManagetmentService {
         // 수정한 데이터에 권한이 있는가
         if(!checkAuth(newProductManagement)){
             ResponseDto responseDto = ResponseDto.builder()
-                    .message("fail edit productManagement")
+                    .message("해당 권한이 없습니다.")
                     .data(null)
                     .build();
 
@@ -243,7 +243,7 @@ public class ProductManagetmentService {
         saveTableList(requestDto.getTableList(),no);
 
         ResponseDto responseDto = ResponseDto.builder()
-                .message("ProductManagement edit")
+                .message("제품관리 수정에 성공하였습니다.")
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.OK );
     }
@@ -257,7 +257,7 @@ public class ProductManagetmentService {
         // 삭제하려는 데이터에 권한이 있는가.
         if(!checkAuth(newProductManagement)){
             ResponseDto responseDto = ResponseDto.builder()
-                    .message("fail delete productManagement")
+                    .message("해당 권한이 없습니다.")
                     .data(null)
                     .build();
 
@@ -271,7 +271,7 @@ public class ProductManagetmentService {
         productManagementRepository.delete(newProductManagement);
 
         ResponseDto responseDto = ResponseDto.builder()
-                .message("delete ProduceManagemnet : "+no)
+                .message("제품관리 삭제에 성공하였습니다.")
                 .build();
 
         return new ResponseEntity<>(responseDto,HttpStatus.OK);

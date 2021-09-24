@@ -51,7 +51,7 @@ public class ManagerController {
 
     // 관리자 수정
     @PutMapping("/{no}")
-    public ResponseEntity<ResponseDto> editManager(@RequestBody @Valid ManagerEditRequestDto managerRequestDto, @PathVariable int no, HttpServletRequest request) throws UserNotPresentException {
+    public ResponseEntity<ResponseDto> editManager(@RequestBody @Valid ManagerEditRequestDto managerRequestDto, @PathVariable int no, HttpServletRequest request) throws UserNotPresentException, UserPresentException {
 
         ResponseEntity<ResponseDto> result = managerService.editManager(managerRequestDto,no);
 

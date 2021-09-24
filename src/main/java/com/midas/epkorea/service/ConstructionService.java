@@ -193,7 +193,7 @@ public class ConstructionService {
 
         if(!checkAuth(construction.getCategory())){
             ResponseDto responseDto = ResponseDto.builder()
-                    .message("fail create construction")
+                    .message("해당 권한이 없습니다.")
                     .data(null)
                     .build();
 
@@ -211,7 +211,7 @@ public class ConstructionService {
         saveConstructionDetailImage(requestDto.getDetailImage(), no);
 
         ResponseDto responseDto = ResponseDto.builder()
-                .message("Construction create")
+                .message("구축사례 관리 등록에 성공하였습니다.")
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED );
 
@@ -225,7 +225,7 @@ public class ConstructionService {
 
         if(!checkAuth(constructionDetail.getCategory())){
             ResponseDto responseDto = ResponseDto.builder()
-                    .message("fail find detail construction")
+                    .message("해당 권한이 없습니다.")
                     .data(null)
                     .build();
 
@@ -256,7 +256,7 @@ public class ConstructionService {
 
         if(!checkAuth(construction.getCategory())){
             ResponseDto responseDto = ResponseDto.builder()
-                    .message("fail delete construction")
+                    .message("해당 권한이 없습니다.")
                     .data(null)
                     .build();
 
@@ -272,7 +272,7 @@ public class ConstructionService {
         constructionRepository.delete(construction);
 
         ResponseDto responseDto = ResponseDto.builder()
-                .message("delete construction by no")
+                .message("구축사례 관리 삭제에 성공하였습니다.")
                 .build();
 
         return new ResponseEntity<>(responseDto,HttpStatus.OK);
@@ -286,7 +286,7 @@ public class ConstructionService {
 
         if(!checkAuth(construction.getCategory())){
             ResponseDto responseDto = ResponseDto.builder()
-                    .message("fail edit construction")
+                    .message("해당 권한이 없습니다.")
                     .data(null)
                     .build();
 
@@ -297,7 +297,7 @@ public class ConstructionService {
 
         if(!checkAuth(construction.getCategory())){
             ResponseDto responseDto = ResponseDto.builder()
-                    .message("fail new Edit construction")
+                    .message("해당 권한이 없습니다.")
                     .data(null)
                     .build();
 
@@ -319,7 +319,7 @@ public class ConstructionService {
         saveConstructionDetailImage(requestDto.getDetailImage(), no);
 
         ResponseDto responseDto = ResponseDto.builder()
-                .message("edit construction by no")
+                .message("구축사례 수정에 성공하였습니다.")
                 .build();
 
         return new ResponseEntity<>(responseDto,HttpStatus.OK);
