@@ -1,6 +1,7 @@
 package com.midas.epkorea.exception;
 
 import com.midas.epkorea.dto.ResponseDto;
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -66,6 +67,24 @@ public class ExceptionController {
                 .build();
 
         return new ResponseEntity<>(responseDto,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({SizeLimitExceededException.class})
+    public ResponseEntity<ResponseDto> SizeLimitExceededException(){
+        ResponseDto responseDto = ResponseDto.builder()
+                .message("10MB 보다 큰 파일은 등록할 수 없습니다.")
+                .build();
+
+        return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({FileExtentionException.class})
+    public ResponseEntity<ResponseDto> FileExtentionException(FileExtentionException ex){
+        ResponseDto responseDto = ResponseDto.builder()
+                .message(ex.getMessage())
+                .build();
+
+        return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
     }
 
 }

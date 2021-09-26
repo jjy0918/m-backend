@@ -20,13 +20,13 @@ public class LoginController {
     }
 
     @GetMapping("/check/admin")
-    public boolean checkAdmin(){
-        return true;
+    public String checkAdmin(@AuthenticationPrincipal Manager manager){
+        return manager.getId();
     }
 
     @GetMapping("/check/manager")
-    public boolean checkManager(){
-        return true;
+    public String checkManager(@AuthenticationPrincipal Manager manager){
+        return manager.getId();
     }
 
 }

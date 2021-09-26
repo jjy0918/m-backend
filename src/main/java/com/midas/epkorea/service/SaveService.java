@@ -52,17 +52,22 @@ public class SaveService {
                 .build();
     }
 
-
-
-
-    private String upload(MultipartFile file) throws IOException, FileNameNotFoundException {
-        Date time = new Date();
+    public String getExtention(MultipartFile file) throws FileNameNotFoundException{
         String strFileName = file.getOriginalFilename();
         if(strFileName==null){
             throw new FileNameNotFoundException();
         }
         int pos = strFileName.lastIndexOf(".");
         String ext = strFileName.substring(pos + 1);
+        return ext;
+    }
+
+
+    private String upload(MultipartFile file) throws IOException, FileNameNotFoundException {
+        Date time = new Date();
+
+        String ext=getExtention(file);
+
         String fileName = time.getTime() + randomToken() + "." + ext;
 
         s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
