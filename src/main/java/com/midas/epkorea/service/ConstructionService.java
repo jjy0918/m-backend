@@ -284,7 +284,7 @@ public class ConstructionService {
 
         Construction construction = getConstructionByNo(no);
 
-        if(!checkAuth(construction.getCategory())){
+        if(!checkAuth(construction.getCategory()) || !checkAuth(requestDto.getCategory())){
             ResponseDto responseDto = ResponseDto.builder()
                     .message("해당 권한이 없습니다.")
                     .data(null)
@@ -294,15 +294,6 @@ public class ConstructionService {
         }
 
         construction.createConstructionByRequest(requestDto);
-
-        if(!checkAuth(construction.getCategory())){
-            ResponseDto responseDto = ResponseDto.builder()
-                    .message("해당 권한이 없습니다.")
-                    .data(null)
-                    .build();
-
-            return new ResponseEntity<>(responseDto,HttpStatus.FORBIDDEN);
-        }
 
         constructionRepository.save(construction);
 
